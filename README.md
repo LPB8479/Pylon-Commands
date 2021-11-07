@@ -27,7 +27,7 @@ Once you have added Pylon to your server and opened the code editor, do the foll
 - If you are adding a config file or one that has a comment labeled "config", edit the values as needed to fit your server
 - Click "Publish Script" or `ctrl + s`
 
-For all files except `logconfig`, `Astys_Welcome_Banner`, `config` and `verify_rr`:
+For all files except `logconfig`and `config`:
 - Open the `main.ts` file
 - Add the following:
 ```import 'filename';```
