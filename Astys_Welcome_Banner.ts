@@ -1,3 +1,4 @@
+import { config } from '../config';
 discord.on('GUILD_MEMBER_ADD', async (user) => {
   //Welcome channel ID:
   const welcomeChannel = config.channel.welcome;
