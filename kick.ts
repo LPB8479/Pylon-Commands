@@ -29,16 +29,8 @@ config.commands.on(
     var embed = new discord.Embed();
     embed.setTitle('kick | case ' + uses);
     embed.setColor(0x4c88ff);
-    embed.setDescription(
-      '**Offender:** ' +
-        member.user.getTag() +
-        member.user.toMention() +
-        '\n**Reason:** ' +
-        reason +
-        '\n**Responsible moderator:** ' +
-        message.author.getTag()
-    );
-    embed.setFooter({ text: 'ID: ' + member.user.id });
+    embed.setDescription(`**Offender:** ${member.user.getTag()} ${member.user.toMention()}\n**Reason:**' ${reason}'\n**Responsible moderator:**${message.author.getTag()}`);
+    embed.setFooter({ text: `ID: ${member.user.id}` });
     embed.setTimestamp(new Date().toISOString());
     await channel.sendMessage(embed);
   }
