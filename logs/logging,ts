@@ -188,7 +188,7 @@ discord.on(discord.Event.GUILD_MEMBER_ADD, async (user) => {
   ))!;
   const guild = await discord.getGuild();
   const members = guild.memberCount;
-  if (logConfig.memberLogToggle.memberJoin == true) {
+  if (logConfig.joinLeaveLogToggle.memberJoin == true) {
     await channel?.sendMessage(
       new discord.Embed({
         title: `Member joined`,
@@ -231,7 +231,7 @@ discord.on(discord.Event.GUILD_MEMBER_REMOVE, async (member, oldMember) => {
     return fn[0] + ', ' + fn[1] + ' and ' + fn[2];
   }
   // Make embed
-  if (logConfig.memberLogToggle.memberLeave == true) {
+  if (logConfig.joinLeaveLogToggle.memberLeave == true) {
     await channel?.sendMessage(
       new discord.Embed({
         title: `Member left`,
