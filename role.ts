@@ -16,23 +16,21 @@ config.commands.subcommand(
       async (message, { newRoleName, newRoleColor }) => {
         const newColor = parseInt(newRoleColor, 16);
         const guild = await message.getGuild();
+        //  const existingRole = await guild.getRole(config.userrole.brightGreen);
+        const existingRole = await guild.getRole('872614847001538590');
+        const roleperms = await existingRole.permissions;
         await guild.createRole({
           color: newColor,
           name: newRoleName,
           hoist: false,
           mentionable: false,
-          permissions: 0
+          permissions: roleperms
         });
         await message.reply(
           new discord.Embed({
             title: 'Success!',
             color: newColor,
-            description:
-              'The role **' +
-              newRoleName +
-              '** has been created.\n**Color:** #' +
-              newColor +
-              '\n**Mentionable:** False\n**Hoisted:** False'
+            description: `The role **${newRoleName}** has been created.\n**Color:** #${newColor}\n**Mentionable:** False\n**Hoisted:** False`
           })
         );
       }
@@ -40,6 +38,7 @@ config.commands.subcommand(
 
     subcommand.on(
       'add',
+      //     &role add <member> <role>
       (args) => ({
         target: args.guildMember(),
         roleInput: args.string()
@@ -52,7 +51,7 @@ config.commands.subcommand(
         } else {
           await target.addRole(role.id);
           message.reply(
-            'Added **' + role.name + '** to **' + target.user.getTag() + '**.'
+            `Added **${role.name}** to **${target.user.getTag()}**.`
           );
         }
       }
@@ -60,6 +59,7 @@ config.commands.subcommand(
 
     subcommand.on(
       'remove',
+      //     &role remove <member> <role>
       (args) => ({
         target: args.guildMember(),
         roleInput: args.string()
@@ -72,11 +72,7 @@ config.commands.subcommand(
         } else {
           await target.removeRole(role.id);
           message.reply(
-            'Removed **' +
-              role.name +
-              '** from **' +
-              target.user.getTag() +
-              '**.'
+            `Removed **${role.name}** from **${target.user.getTag()}**.`
           );
         }
       }
@@ -104,12 +100,7 @@ config.commands.subcommand(
             new discord.Embed({
               title: 'Role Color Changed',
               color: newColor,
-              description:
-                role.toMention() +
-                ' had its color changed from #' +
-                oldColorHex +
-                ' to #' +
-                newRoleColor
+              description: `${role.toMention()} had its color changed from #${oldColorHex} to #${newRoleColor}`
             })
           );
         }
@@ -132,16 +123,12 @@ config.commands.subcommand(
           if (roleCheck === true) {
             await target.removeRole(role.id);
             message.reply(
-              'Removed **' +
-                role.name +
-                '** from **' +
-                target.user.getTag() +
-                '**.'
+              `Removed **${role.name}** from **${target.user.getTag()}**.`
             );
           } else {
             await target.addRole(role.id);
             message.reply(
-              'Added **' + role.name + '** to **' + target.user.getTag() + '**.'
+              `Added **${role.name}** to **${target.user.getTag()}**.`
             );
           }
         }
