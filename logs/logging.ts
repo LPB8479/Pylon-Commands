@@ -192,15 +192,9 @@ discord.on(discord.Event.GUILD_MEMBER_ADD, async (user) => {
     await channel?.sendMessage(
       new discord.Embed({
         title: `Member joined`,
-        description: user
-          .toMention()
-          .concat(
-            ' ',
-            ord(members),
-            ' to join\nCreated ',
-            timedelta(user.user.id),
-            ' ago'
-          ),
+        description: `${user.toMention} ${ord(
+          members
+        )} to join\nCreated ${timedelta(user.user.id)} ago`,
         color: 0x53dbac,
         author: {
           name: user.user.getTag(),
@@ -235,16 +229,16 @@ discord.on(discord.Event.GUILD_MEMBER_REMOVE, async (member, oldMember) => {
     await channel?.sendMessage(
       new discord.Embed({
         title: `Member left`,
-        description: oldMember
-          .toMention()
-          .concat(' joined ', timedelta(oldMember.joinedAt), ' ago'),
+        description: `${oldMember.toMention()} joined ${timedelta(
+          oldMember.joinedAt
+        )} ago`,
         color: 0xfff6af,
         author: {
           name: oldMember.user.getTag(),
           iconUrl: oldMember.user.getAvatarUrl()
         },
         footer: {
-          text: 'ID: ' + oldMember.user.id
+          text: `ID: ${oldMember.user.id}`
         },
         timestamp: new Date().toISOString()
       })
@@ -303,7 +297,7 @@ discord.on(discord.Event.GUILD_MEMBER_UPDATE, async (member, oldMember) => {
               iconUrl: oldMember.user.getAvatarUrl()
             },
             footer: {
-              text: 'ID: ' + oldMember.user.id
+              text: `ID: ${oldMember.user.id}`
             },
             timestamp: new Date().toISOString()
           })
@@ -323,7 +317,7 @@ discord.on(discord.Event.GUILD_MEMBER_UPDATE, async (member, oldMember) => {
                 iconUrl: oldMember.user.getAvatarUrl()
               },
               footer: {
-                text: 'ID: ' + oldMember.user.id
+                text: `ID: ${oldMember.user.id}`
               },
               thumbnail: { url: member.user.getAvatarUrl() },
               timestamp: new Date().toISOString()
@@ -346,18 +340,14 @@ discord.on(discord.Event.GUILD_MEMBER_UPDATE, async (member, oldMember) => {
             await channel?.sendMessage(
               new discord.Embed({
                 title: 'Nickname ' + title,
-                description: '**Before: **'.concat(
-                  before,
-                  '\n**After: **',
-                  after
-                ),
+                description: `**Before:** ${before}\n**After:** ${after}}`,
                 color: 0x4286f4,
                 author: {
                   name: oldMember.user.getTag(),
                   iconUrl: oldMember.user.getAvatarUrl()
                 },
                 footer: {
-                  text: 'ID: ' + oldMember.user.id
+                  text: `ID: ${oldMember.user.id}`
                 },
                 timestamp: new Date().toISOString()
               })
@@ -370,18 +360,14 @@ discord.on(discord.Event.GUILD_MEMBER_UPDATE, async (member, oldMember) => {
               await channel?.sendMessage(
                 new discord.Embed({
                   title: 'Discriminator update',
-                  description: '**Before: **'.concat(
-                    oldMember.user.discriminator,
-                    '\n**After: **',
-                    member.user.discriminator
-                  ),
+                  description: `**Before:** ${oldMember.user.discriminator}\n**After:** ${member.user.discriminator}}`,
                   color: 0x4286f4,
                   author: {
                     name: oldMember.user.getTag(),
                     iconUrl: oldMember.user.getAvatarUrl()
                   },
                   footer: {
-                    text: 'ID: ' + oldMember.user.id
+                    text: `ID: ${oldMember.user.id}`
                   },
                   thumbnail: { url: member.user.getAvatarUrl() },
                   timestamp: new Date().toISOString()
@@ -397,14 +383,14 @@ discord.on(discord.Event.GUILD_MEMBER_UPDATE, async (member, oldMember) => {
                 await channel?.sendMessage(
                   new discord.Embed({
                     title: 'Name change',
-                    description: '**Before: **'.concat('\n**After: **', after),
+                    description: `**Before:** ${before}\n**After:** ${after}}`,
                     color: 0x4286f4,
                     author: {
                       name: oldMember.user.getTag(),
                       iconUrl: oldMember.user.getAvatarUrl()
                     },
                     footer: {
-                      text: 'ID: ' + oldMember.user.id
+                      text: `ID: ${oldMember.user.id}`
                     },
                     timestamp: new Date().toISOString()
                   })
@@ -434,7 +420,7 @@ discord.on(discord.Event.GUILD_BAN_ADD, async (guildBan) => {
           iconUrl: guildBan.user.getAvatarUrl()
         },
         footer: {
-          text: 'ID: ' + guildBan.user.id
+          text: `ID: ${guildBan.user.id}`
         },
         thumbnail: { url: guildBan.user.getAvatarUrl() },
         timestamp: new Date().toISOString()
@@ -459,7 +445,7 @@ discord.on(discord.Event.GUILD_BAN_REMOVE, async (guildBan) => {
           iconUrl: guildBan.user.getAvatarUrl()
         },
         footer: {
-          text: 'ID: ' + guildBan.user.id
+          text: `ID: ${guildBan.user.id}`
         },
         thumbnail: { url: guildBan.user.getAvatarUrl() },
         timestamp: new Date().toISOString()
@@ -487,7 +473,7 @@ discord.on(discord.Event.MESSAGE_DELETE, async (event, message) => {
           iconUrl: message?.author.getAvatarUrl()
         },
         footer: {
-          text: 'ID: ' + message?.author.id
+          text: `ID: ${message?.author.id}`
         },
         timestamp: new Date().toISOString()
       })
@@ -507,18 +493,14 @@ discord.on(discord.Event.MESSAGE_UPDATE, async (newMessage, oldMessage) => {
     await channel?.sendMessage(
       new discord.Embed({
         title: `Message edited in #${delChannel?.name}`,
-        description:
-          '**Before:** ' +
-          oldMessage?.content +
-          '\n**+After:** ' +
-          newMessage?.content,
+        description: `**Before:** ${oldMessage?.content}\n**After:** ${newMessage?.content}`,
         color: 0x4286f4,
         author: {
           name: oldMessage?.author.getTag(),
           iconUrl: oldMessage?.author.getAvatarUrl()
         },
         footer: {
-          text: 'ID: ' + oldMessage?.author.id
+          text: `ID: ${oldMessage?.author.id}`
         },
         timestamp: new Date().toISOString()
       })
@@ -537,19 +519,12 @@ discord.on(discord.Event.GUILD_ROLE_CREATE, async (event) => {
     await logChannel?.sendMessage(
       new discord.Embed({
         title: 'New role created',
-        description: '**Name: **'.concat(
-          newRole.name,
-          '\n**Color: **',
-          decimalToHex(newRole.color, 6),
-          '\n**Mentionable: **',
-          newRole.mentionable.toString(),
-          '\n**Displayed separately: **',
-          newRole.hoist.toString()
-        ),
+        description: `**Name:** ${newRole.name}\n**Color:** ${decimalToHex(
+          newRole.color,
+          6
+        )}\n**Mentionable:** ${newRole.mentionable.toString()}\n**Displayed separately:** ${newRole.hoist.toString()}`,
         color: 0x53ddad,
-        footer: {
-          text: 'Role ID: ' + newRole.id
-        },
+        footer: { text: `Role ID: ${event.role.id}` },
         timestamp: new Date().toISOString()
       })
     );
@@ -567,106 +542,106 @@ discord.on(discord.Event.GUILD_ROLE_UPDATE, async (event, old) => {
   if (logConfig.serverLogToggle.roleUpdate == true) {
     if (event.role.color !== old.color) {
       messages.push({
-        title: 'Role '.concat(event.role.name, ' updated'),
+        title: `Role ${event.role.name} updated`,
         fields: [
           {
             inline: true,
             name: 'Before',
-            value: '**Color:** #'.concat(decimalToHex(old.color, 6))
+            value: `**Color:** #${decimalToHex(old.color, 6)}`
           },
           {
             inline: true,
             name: 'After',
-            value: '**Color:** #'.concat(decimalToHex(event.role.color, 6))
+            value: `**Color:** #${decimalToHex(event.role.color, 6)}`
           }
         ],
         color: 4359924,
         type: 'rich',
-        footer: { text: 'Role ID: '.concat(event.role.id) },
+        footer: { text: `Role ID: ${event.role.id}` },
         timestamp: timestamp
       });
     }
     if (event.role.hoist !== old.hoist) {
       messages.push({
-        title: 'Role '.concat(event.role.name, ' updated'),
+        title: `Role ${event.role.name} updated`,
         fields: [
           {
             inline: true,
             name: 'Before',
-            value: '**Hoisted:** '.concat(old.hoist.toString())
+            value: `**Hoisted:** ${old.hoist.toString()}`
           },
           {
             inline: true,
             name: 'After',
-            value: '**Hoisted:** '.concat(event.role.hoist.toString())
+            value: `**Hoisted:** ${event.role.hoist.toString()}`
           }
         ],
         color: 4359924,
         type: 'rich',
-        footer: { text: 'Role ID: '.concat(event.role.id) },
+        footer: { text: `Role ID: ${event.role.id}` },
         timestamp: timestamp
       });
     }
     if (event.role.name !== old.name) {
       messages.push({
-        title: 'Role '.concat(event.role.name, ' updated'),
+        title: `Role ${event.role.name} updated`,
         fields: [
           {
             inline: true,
             name: 'Before',
-            value: '**Name:** '.concat(old.name)
+            value: `**Name:** ${old.name}`
           },
           {
             inline: true,
             name: 'After',
-            value: '**Name:** '.concat(event.role.name)
+            value: `**Name:** ${event.role.name}`
           }
         ],
         color: 4359924,
         type: 'rich',
-        footer: { text: 'Role ID: '.concat(event.role.id) },
+        footer: { text: `Role ID: ${event.role.id}` },
         timestamp: timestamp
       });
     }
     if (event.role.mentionable !== old.mentionable) {
       messages.push({
-        title: 'Role '.concat(event.role.name, ' updated'),
+        title: `Role ${event.role.name} updated`,
         fields: [
           {
             inline: true,
             name: 'Before',
-            value: '**Mentionable:** '.concat(old.mentionable.toString())
+            value: `**Mentionable:** ${old.mentionable.toString()}`
           },
           {
             inline: true,
             name: 'After',
-            value: '**Mentionable:** '.concat(event.role.mentionable.toString())
+            value: `**Mentionable:** ${event.role.mentionable.toString()}`
           }
         ],
         color: 4359924,
         type: 'rich',
-        footer: { text: 'Role ID: '.concat(event.role.id) },
+        footer: { text: `Role ID: ${event.role.id}` },
         timestamp: timestamp
       });
     }
     if (event.role.position !== old.position) {
       messages.push({
-        title: 'Role '.concat(event.role.name, ' updated'),
+        title: `Role ${event.role.name} updated`,
         fields: [
           {
             inline: true,
             name: 'Before',
-            value: '**Position:** '.concat(old.position.toString())
+            value: `**Position:** ${old.position.toString()}`
           },
           {
             inline: true,
             name: 'After',
-            value: '**Position:** '.concat(event.role.position.toString())
+            value: `**Position:** ${event.role.position.toString()}`
           }
         ],
         color: 4359924,
         type: 'rich',
-        footer: { text: 'Role ID: '.concat(event.role.id) },
+        footer: { text: `Role ID: ${event.role.id}` },
         timestamp: timestamp
       });
     }
@@ -678,9 +653,9 @@ discord.on(discord.Event.GUILD_ROLE_UPDATE, async (event, old) => {
       messages.push({
         color: 4359924,
         type: 'rich',
-        title: 'Role '.concat(event.role.name, ' updated'),
+        title: `Role ${event.role.name} updated`,
         fields: [{ inline: true, name: 'New permissions', value: diffBlock }],
-        footer: { text: 'Role ID: '.concat(event.role.id) },
+        footer: { text: `Role ID: ${event.role.id}` },
         timestamp: timestamp
       });
     }
@@ -709,24 +684,21 @@ discord.on(discord.Event.GUILD_ROLE_DELETE, async (event, oldRole) => {
         ).toString();
         await logChannel?.sendMessage(
           new discord.Embed({
-            title: 'Role "'.concat(event.changes.name.oldValue, '" deleted'),
-            description: '**Name: **'.concat(
-              event.changes.name.oldValue,
-              '\n**Color: **#',
-              decimalToHex(event.changes.color.oldValue, 6),
-              '\n**Mentionable: **',
-              capitalizeFirstLetter(
-                event.changes.mentionable.oldValue.toString()
-              ),
-              '\n**Displayed separately: **',
-              capitalizeFirstLetter(event.changes.hoist.oldValue.toString()),
-              '\n**Specific perms: **',
+            title: `Role "${event.changes.name.oldValue}" deleted`,
+            description: `**Name:** ${
+              event.changes.name.oldValue
+            }\n**Color:** #${decimalToHex(
+              event.changes.color.oldValue,
+              6
+            )}\n**Mentionable:** ${capitalizeFirstLetter(
+              event.changes.mentionable.oldValue.toString()
+            )}\n**Displayed separately:** ${capitalizeFirstLetter(
+              event.changes.hoist.oldValue.toString()
+            )}\n**Specific perms:** ${
               perms == '' ? 'N/A' : perms.replace(',', ', ')
-            ),
+            }`,
             color: 0xdd5e53,
-            footer: {
-              text: 'Role ID: ' + event.targetId
-            },
+            footer: { text: `Role ID: ${event.targetId}` },
             timestamp: new Date().toISOString()
           })
         );
@@ -755,23 +727,17 @@ discord.on(discord.Event.CHANNEL_CREATE, async (anyChannel) => {
         role != null
           ? 'Role override for '.concat(role.name)
           : 'User override for '.concat(permMember.user.getTag()),
-      value: '**Read messages:** ' + emoji
+      value: `**Read messages:** ${emoji}`
     });
   }
   if (logConfig.serverLogToggle.channelCreate == true) {
     await logChannel?.sendMessage(
       new discord.Embed({
         title: 'Text channel created',
-        description: '**Name: **'.concat(
-          newChannel.name,
-          '\n**Category:** ',
-          channelCategory.name
-        ),
+        description: `**Name:** ${newChannel.name}\n**Category:** ${channelCategory.name}`,
         color: 0x53ddad,
         fields: arr,
-        footer: {
-          text: 'Channel ID: ' + newChannel.id
-        },
+        footer: { text: `Channel ID: ${newChannel.id}` },
         timestamp: new Date().toISOString()
       })
     );
@@ -792,32 +758,28 @@ discord.on(discord.Event.CHANNEL_UPDATE, async (channel, oldChannel) => {
       var after = '';
       if (event.actionType == 11) {
         if (eventString.includes('name')) {
-          before += '**Name:** '.concat(event.changes.name.oldValue, '\n');
-          after += '**Name:** '.concat(event.changes.name.newValue, '\n');
+          before += `**Name:** ${event.changes.name.oldValue}\n`;
+          after += `**Name:** ${event.changes.name.newValue}\n`;
         }
         if (eventString.includes('nsfw')) {
-          before += '**NSFW:** '.concat(
-            capitalizeFirstLetter(event.changes.nsfw.oldValue.toString()),
-            '\n'
-          );
-          after += '**NSFW:** '.concat(
-            capitalizeFirstLetter(event.changes.nsfw.newValue.toString()),
-            '\n'
-          );
+          before += `**NSFW:** ${capitalizeFirstLetter(
+            event.changes.nsfw.oldValue.toString()
+          )}\n`;
+          after += `**NSFW:** ${capitalizeFirstLetter(
+            event.changes.nsfw.newValue.toString()
+          )}'\n`;
         }
         if (eventString.includes('topic')) {
-          before += '**Topic:** '.concat(
+          before += `**Topic:** ${
             event.changes.topic.oldValue == undefined
               ? 'none'
-              : event.changes.topic.oldValue,
-            '\n'
-          );
-          after += '**Topic:** '.concat(
+              : event.changes.topic.oldValue
+          }\n`;
+          after += `**Topic:** ${
             event.changes.topic.newValue == undefined
               ? 'none'
-              : event.changes.topic.newValue,
-            '\n'
-          );
+              : event.changes.topic.newValue
+          }\n`;
         }
         await logChannel?.sendMessage(
           new discord.Embed({
@@ -835,14 +797,11 @@ discord.on(discord.Event.CHANNEL_UPDATE, async (channel, oldChannel) => {
               }
             ],
             color: 0x4286f4,
-            footer: {
-              text: 'Channel ID: '.concat(event.targetId)
-            },
+            footer: { text: `Channel ID: ${event.targetId}` },
             timestamp: new Date().toISOString()
           })
         );
       }
-      //if (event.actionType > 12 && event.actionType < 16) {}
     }
   }
 });
@@ -859,11 +818,9 @@ discord.on(discord.Event.CHANNEL_DELETE, async (channel) => {
         await logChannel?.sendMessage(
           new discord.Embed({
             title: 'Text channel deleted',
-            description: '**Name: **'.concat(event.changes.name.oldValue),
+            description: `**Name:** ${event.changes.name.oldValue}`,
             color: 0xdd5e53,
-            footer: {
-              text: 'Channel ID: ' + event.targetId
-            },
+            footer: { text: `Channel ID: ${event.targetId}` },
             timestamp: new Date().toISOString()
           })
         );
