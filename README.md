@@ -11,10 +11,12 @@ A recreation of Carl-bot commands and features in Pylon
 - `setnick`
 - Reaction role in "verify" mode
 
-## Coming Soon(ish)
-- More moderation commands
-- Basic `embed` command
-- More reaction roles
+## To do list:
+- Simplify all code with template literals
+- Fetch & attach image for welcome
+- Make more moderation commands
+- Make basic `embed` command
+- Make more reaction roles
 - Other features upon request (if I can do it)
 
 ## Instructions
