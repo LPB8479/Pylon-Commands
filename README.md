@@ -9,6 +9,7 @@ A recreation of Carl-bot commands and features in Pylon
 - `cembed`
 - `role` command with most if not all subcommands
 - `setnick`
+- `react` (adds a reaction to any message)
 - Reaction role in "verify" mode
 
 ## To do list:
