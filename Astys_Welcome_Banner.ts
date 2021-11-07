@@ -44,26 +44,7 @@ discord.on('GUILD_MEMBER_ADD', async (user) => {
 
   const name = user.user.username.replace(' ', '⠀');
 
-  const banner =
-    'https://res.cloudinary.com/demo/image/fetch/c_fill' +
-    avShape +
-    outav +
-    '/h_170,w_450,c_lpad' +
-    bgav +
-    ',g_west,x_30,r_' +
-    roundedCorners +
-    '/l_text:Montserrat_35_medium' +
-    wita +
-    ':Welcome%252C,co_white' +
-    textshad +
-    '/fl_layer_apply,g_north,y_45,x_60/l_text:Montserrat_40_medium:' +
-    name +
-    ',co_white' +
-    textshad +
-    '/fl_layer_apply,g_west,x_200,y_25,w_240,c_lfill/u_one_pixel/h_170,w_450/e_colorize,co_rgb:' +
-    defaultBGcolor +
-    '/fl_layer_apply,c_fill,r_10/' +
-    uav;
+  const banner = `https://res.cloudinary.com/demo/image/fetch/c_fill${avShape}${outav}/h_170,w_450,c_lpad${bgav},g_west,x_30,r_${roundedCorners}/l_text:Montserrat_35_medium${wita}:Welcome%252C,co_white${textshad}/fl_layer_apply,g_north,y_45,x_60/l_text:Montserrat_40_medium:${name},co_white${textshad}/fl_layer_apply,g_west,x_200,y_25,w_240,c_lfill/u_one_pixel/h_170,w_450/e_colorize,co_rgb:${defaultBGcolor}/fl_layer_apply,c_fill,r_10/${uav}`;
   var embed = new discord.Embed();
   embed.setImage({ url: banner });
   embed.setColor(0x7ed321);
