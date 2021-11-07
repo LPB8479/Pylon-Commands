@@ -1,3 +1,4 @@
+import { config } from '../config';
 async function urlToArrayBuffer(url: string) {
   const emoji = await (await fetch(url)).arrayBuffer();
   return emoji;
