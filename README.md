@@ -28,4 +28,4 @@ For all files except `logconfig`, `Astys_Welcome_Banner`, `config` and `verify_r
 - Open the `main.ts` file
 - Add the following:
 ```import 'filename';```
-(do NOT inclide the file extension here
+(do NOT inclide the file extension here)
