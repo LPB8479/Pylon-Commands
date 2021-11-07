@@ -3,11 +3,7 @@ async function urlToArrayBuffer(url: string) {
   return emoji;
 }
 
-new discord.command.CommandGroup({
-    defaultPrefix: '&',
-    additionalPrefixes: ['!'],
-    mentionPrefix: true
-  }).subcommand(
+config.commands.subcommand(
   {
     name: 'addemoji',
     description: 'Add server emoji',
