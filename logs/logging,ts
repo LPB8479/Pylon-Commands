@@ -1,4 +1,4 @@
-import { logConfig } from '../logconfig';
+import { logConfig } from '../config/logconfig';
 
 type MessageChannel = discord.GuildTextChannel | discord.GuildNewsChannel;
 //FUNCTIONS
@@ -184,7 +184,7 @@ function timedelta /*for {user(joined_at)}*/(snowflake: string) {
 //MEMBER JOIN LOGS
 discord.on(discord.Event.GUILD_MEMBER_ADD, async (user) => {
   let channel = (await discord.getGuildTextChannel(
-    logConfig.logChannels.memberLogChannelID
+    logConfig.logChannels.joinLeaveLogChannelID
   ))!;
   const guild = await discord.getGuild();
   const members = guild.memberCount;
@@ -218,7 +218,7 @@ discord.on(discord.Event.GUILD_MEMBER_ADD, async (user) => {
 //MEMBER LEAVE LOGS
 discord.on(discord.Event.GUILD_MEMBER_REMOVE, async (member, oldMember) => {
   let channel = (await discord.getGuildTextChannel(
-    logConfig.logChannels.memberLogChannelID
+    logConfig.logChannels.joinLeaveLogChannelID
   ))!;
   // Get time since joined
   function timedelta(timestamp: string) {
