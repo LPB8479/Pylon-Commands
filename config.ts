@@ -6,7 +6,6 @@ export const config = {
     mentionPrefix: true
   }),
   channel: {
-    modpg: '000000000000000000',
     welcome: '000000000000000000',
     modlog: '000000000000000000'
   },
