@@ -1,6 +1,6 @@
 discord.on('GUILD_MEMBER_ADD', async (user) => {
   //Welcome channel ID:
-  const welcomeChannel = '000000000000000000';
+  const welcomeChannel = config.channel.welcome;
   //Put "yes" (without quotation marks) if you want the user's avatar to be a circle. If not, put nothing or any other value, and the avatar will display as a square instead.
   const avatarCircle = 'yes';
   //Put "yes" (without the quotation marks) if you want an outline/border on the user's avatar. If not, put whatever or empty, doesn't matter. Note: Not putting an outline can look better on avatars with some kind of transparency, but it's up to your general preference.
