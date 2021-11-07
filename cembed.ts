@@ -1,10 +1,8 @@
-new discord.command.CommandGroup({
-    defaultPrefix: '&',
-    additionalPrefixes: ['!'],
-    mentionPrefix: true
-  }).on(
+import { config } from '../config';
+
+config.commands.on(
   {
-    filters: discord.command.filters.canManageMessages(),
+    //  filters: discord.command.filters.hasRole(config.userrole.moderator),
     name: 'embed',
     description:
       'Send an embed using a pastebin link (Only include the paste key)'
