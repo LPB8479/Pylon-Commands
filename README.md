@@ -1,26 +1,27 @@
 # Pylon-Commands
 A recreation of Carl-bot commands and features in Pylon
 ## Features:
-- a full logging system
-- customizable welcome banner originally made by `Asty'#8926`
+- A full logging system
+- Customizable welcome banner originally made by `Asty'#8926`
 - `ban` and `kick` commands with modlogs
 - `addemoji`
 - `ping`
 - `cembed`
 - `role` command with most if not all subcommands
 - `setnick`
-- reaction role in "verify" mode
+- Reaction role in "verify" mode
 
 ## Coming Soon(ish)
-- more moderation commands
-- basic `embed` command
-- more reaction roles
-- other features upon request (if I can do it)
+- More moderation commands
+- Basic `embed` command
+- More reaction roles
+- Other features upon request (if I can do it)
 
 ## Instructions
 Once you have added Pylon to your server and opened the code editor, do the following for each file you want to add (note: almost all of my commands require you the `config` file):
 - Create a new file
-- name it `filename.ts` (the file extension is important)
+- Name it `filename.ts` (the file extension is important)
+- Copy and paste the code from Github into the code editor
 - If you are adding a config file or one that has a comment labeled "config", edit the values as needed to fit your server
 - Click "Publish Script" or `ctrl + s`
 
