@@ -19,6 +19,7 @@ A recreation of Carl-bot commands and features in Pylon
 - Make basic `embed` command
 - Make more reaction roles
 - Make `echo` command
+- Make poll commands
 - Other features upon request (if I can do it)
 
 ## Instructions
