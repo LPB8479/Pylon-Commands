@@ -21,15 +21,17 @@ config.commands.on(
       );
       return nextValue!;
     }
-    await message.reply('Kicked **' + member.user.getTag() + '**.');
+    await message.reply(`Kicked **${member.user.getTag()}**.`);
     await member.kick();
-    const channel = await discord.getGuildTextChannel(config.channel.modlog);
+    const channel = await discord.getGuildTextChannel('875212427132805180');
     let uses = await UsesCounter('count');
     // Assemble embed
     var embed = new discord.Embed();
-    embed.setTitle('kick | case ' + uses);
+    embed.setTitle(`Kick | Case ${uses}`);
     embed.setColor(0x4c88ff);
-    embed.setDescription(`**Offender:** ${member.user.getTag()} ${member.user.toMention()}\n**Reason:**' ${reason}'\n**Responsible moderator:**${message.author.getTag()}`);
+    embed.setDescription(
+      `**Offender:** ${member.user.getTag()} ${member.user.toMention()}\n**Reason:**' ${reason}'\n**Responsible moderator:**${message.author.getTag()}`
+    );
     embed.setFooter({ text: `ID: ${member.user.id}` });
     embed.setTimestamp(new Date().toISOString());
     await channel.sendMessage(embed);
