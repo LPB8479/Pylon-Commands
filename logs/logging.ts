@@ -6,56 +6,45 @@ function timeDifference(now: number, unixValue: number) {
   var difference = now - unixValue;
   var yearsCalc = Math.floor(difference / 31536000);
   difference = difference % 31536000;
-  var yearsDifference = yearsCalc + ' year';
+  var yearsDifference = `${yearsCalc} year`;
   if (yearsCalc != 1) {
     yearsDifference += 's';
   }
 
   var monthsCalc = Math.floor(difference / 2628288);
   difference = difference % 2628288;
-  var monthsDifference = monthsCalc + ' month';
+  var monthsDifference = `${monthsCalc} month`;
   if (monthsCalc != 1) {
     monthsDifference += 's';
   }
 
   var daysCalc = Math.floor(difference / 86400);
   difference = difference % 86400;
-  var daysDifference = daysCalc + ' day';
+  var daysDifference = `${daysCalc} day`;
   if (daysCalc != 1) {
     daysDifference += 's';
   }
 
   var hoursCalc = Math.floor(difference / 3600);
   difference = difference % 3600;
-  var hoursDifference = hoursCalc + ' hour';
+  var hoursDifference = `${hoursCalc} hour`;
   if (hoursCalc != 1) {
     hoursDifference += 's';
   }
 
   var minutesCalc = Math.floor(difference / 60);
   difference = difference % 60;
-  var minutesDifference = minutesCalc + ' minute';
+  var minutesDifference = `${minutesCalc} minute`;
   if (minutesCalc != 1) {
     minutesDifference += 's';
   }
 
   var secondsCalc = difference;
-  var secondsDifference = secondsCalc + ' second';
+  var secondsDifference = `${secondsCalc} second`;
   if (secondsCalc != 1) {
     secondsDifference += 's';
   }
-  var tdString =
-    yearsDifference +
-    ',' +
-    monthsDifference +
-    ',' +
-    daysDifference +
-    ',' +
-    hoursDifference +
-    ',' +
-    minutesDifference +
-    ',' +
-    secondsDifference;
+  var tdString = `${yearsDifference}, ${monthsDifference}, ${daysDifference}, ${hoursDifference}, ${minutesDifference}, ${secondsDifference}`;
   var rep = tdString.replace(/0.\s/g, '');
   var tdArray = rep.split(',');
   return tdArray;
@@ -178,7 +167,7 @@ function timedelta /*for {user(joined_at)}*/(snowflake: string) {
   const fn = timeDifference(now, unixValue).filter(
     (time) => time.includes('0') == false
   );
-  return fn[0] + ', ' + fn[1] + ' and ' + fn[2];
+  return `${fn[0]}, ${fn[1]} and ${fn[2]}`;
 }
 
 //MEMBER JOIN LOGS
@@ -201,7 +190,7 @@ discord.on(discord.Event.GUILD_MEMBER_ADD, async (user) => {
           iconUrl: user.user.getAvatarUrl()
         },
         footer: {
-          text: 'ID: ' + user.user.id
+          text: `ID: ${user.user.id}`
         },
         timestamp: new Date().toISOString()
       })
@@ -222,7 +211,7 @@ discord.on(discord.Event.GUILD_MEMBER_REMOVE, async (member, oldMember) => {
     const fn = timeDifference(now, unixValue).filter(
       (time) => time.includes('0') == false
     );
-    return fn[0] + ', ' + fn[1] + ' and ' + fn[2];
+    return `${fn[0]}, ${fn[1]} and ${fn[2]}`;
   }
   // Make embed
   if (logConfig.joinLeaveLogToggle.memberLeave == true) {
@@ -264,22 +253,18 @@ discord.on(discord.Event.GUILD_MEMBER_UPDATE, async (member, oldMember) => {
       );
       var diffArray = difference1.concat(difference2);
       var diffstring = diffArray.toString();
-      if (
+      var output =
         Math.abs(member.roles.length - oldMember.roles.length) ==
         diffArray.length
-      ) {
-        var output = '<@&' + diffstring.replace(/,/g, '>, <@&') + '>';
-      } else {
-        var output =
-          '**Added: **' +
-          '<@&' +
-          difference2.toString().replace(/,/g, '>, <@&') +
-          '>' +
-          '\n**Removed: **' +
-          '<@&' +
-          difference1.toString().replace(/,/g, '>, <@&') +
-          '>';
-      }
+          ? `<@&${diffstring.replace(/,/g, '>, <@&')}>`
+          : `**Added:** <@&${difference2
+              .toString()
+              .replace(
+                /,/g,
+                '>, <@&'
+              )}>\n**Removed:** <@&${difference1
+              .toString()
+              .replace(/,/g, '>, <@&')}>`;
       var title = output.includes('**')
         ? 'updated'
         : member.roles.length > oldMember.roles.length
@@ -289,7 +274,7 @@ discord.on(discord.Event.GUILD_MEMBER_UPDATE, async (member, oldMember) => {
       if (logConfig.memberLogToggle.memberRoleUpdates == true) {
         await channel?.sendMessage(
           new discord.Embed({
-            title: `Roles ` + title,
+            title: `Roles ${title}`,
             description: output,
             color: 0x4286f4,
             author: {
@@ -339,7 +324,7 @@ discord.on(discord.Event.GUILD_MEMBER_UPDATE, async (member, oldMember) => {
           if (logConfig.memberLogToggle.memberNicknameChange == true) {
             await channel?.sendMessage(
               new discord.Embed({
-                title: 'Nickname ' + title,
+                title: `Nickname ${title}`,
                 description: `**Before:** ${before}\n**After:** ${after}}`,
                 color: 0x4286f4,
                 author: {
@@ -647,9 +632,7 @@ discord.on(discord.Event.GUILD_ROLE_UPDATE, async (event, old) => {
     }
     if (event.role.permissions !== old.permissions) {
       const diff = makePermissionDiff(event.role.permissions, old.permissions);
-      const diffBlock = `\`\`\`diff\n${
-        diff.added.length ? diff.added.join('\n') : ''
-      }${diff.removed.length ? '\n' + diff.removed.join('\n') : ''}󠁡\n\`\`\``;
+      const diffBlock = `\`\`\`diff\n${diff.added.length ? diff.added.join('\n') : ''}${diff.removed.length ? '\n' + diff.removed.join('\n') : ''}󠁡\n\`\`\``;
       messages.push({
         color: 4359924,
         type: 'rich',
