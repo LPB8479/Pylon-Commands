@@ -12,15 +12,8 @@ A recreation of Carl-bot commands and features in Pylon
 - `react` (adds a reaction to any message)
 - Reaction role in "verify" mode
 
-## To do list:
-- Simplify all code with template literals
-- Fetch & attach image for welcome
-- Make more moderation commands
-- Make basic `embed` command
-- Make more reaction roles
-- Make `echo` command
-- Make poll commands
-- Other features upon request (if I can do it)
+## Additional features:
+If you would like to request an addition, please add it under the "Issues" tab.
 
 ## Instructions
 Once you have added Pylon to your server and opened the code editor, do the following for each file you want to add (note: almost all of my commands require you the `config` file):
