@@ -19,11 +19,7 @@ config.commands.subcommand(
       }),
       async (message, { emojiName, hex }) => {
         const color = hex.replace('#', '').toLowerCase;
-        const emoji = urlToArrayBuffer(
-          'https://res.cloudinary.com/demo/w_150,h_150/c_fill,r_max/e_colorize,co_rgb:' +
-            color +
-            '/one_pixel.png'
-        );
+        const emoji = urlToArrayBuffer(`https://res.cloudinary.com/demo/w_150,h_150/c_fill,r_max/e_colorize,co_rgb:${color}'/one_pixel.png`);
         const guild = await message.getGuild();
         await guild.createEmoji({
           image: emoji,
