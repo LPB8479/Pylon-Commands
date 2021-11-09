@@ -36,7 +36,7 @@ discord.on('GUILD_MEMBER_ADD', async (user) => {
   var avShape = avatarCircle == 'yes' ? ',r_max' : '';
   var outav =
     avatarOutline == 'yes'
-      ? ',bo_' + outlineThickness + 'px_solid_rgb:' + outlineColor
+      ? `,bo_${outlineThickness}px_solid_rgb:${outlineColor}`
       : '';
   var textshad = textShadow == 'yes' ? '/e_shadow:5,x_1,y_1,co_black' : '';
 
