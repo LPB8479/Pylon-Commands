@@ -12,8 +12,8 @@ A recreation of Carl-bot commands and features in Pylon
 - `react` (adds a reaction to any message)
 - Reaction role in "verify" mode
 
-## Additional features:
-If you would like to request an addition, please add it under the "Issues" tab.
+## Additional features and changes:
+I'd love for this system to work in many servers, not just mine. If you would like to request an addition or would like to suggest a change, please add it under the "Issues" tab.
 
 ## Instructions
 Once you have added Pylon to your server and opened the code editor, do the following for each file you want to add (note: almost all of my commands require you the `config` file):
