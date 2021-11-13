@@ -9,8 +9,10 @@ A recreation of Carl-bot commands and features in Pylon
 - `cembed`
 - `role` command with most if not all subcommands
 - `setnick`
-- `react` (adds a reaction to any message)
 - Reaction role in "verify" mode
+-#### Other helpful commands
+- `react` (adds a reaction to any message)
+- `clonechannel` (creates a new channel with permissions copied from another channel)
 
 ## Additional features and changes:
 I'd love for this system to work in many servers, not just mine. If you would like to request an addition or would like to suggest a change, please add it under the "Issues" tab.
