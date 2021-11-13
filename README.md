@@ -16,7 +16,7 @@ A recreation of Carl-bot commands and features in Pylon
 I'd love for this system to work in many servers, not just mine. If you would like to request an addition or would like to suggest a change, please add it under the "Issues" tab.
 
 ## Instructions
-Once you have added Pylon to your server and opened the code editor, do the following for each file you want to add (note: almost all of my commands require you the `config` file):
+Once you have added Pylon to your server and opened the code editor, do the following for each file you want to add (note: all of these commands require you to add the `config` file, and the logging system requires the `logconfig` file):
 - Create a new file
 - Name it `filename.ts` (the file extension is important)
 - Copy and paste the code from Github into the code editor
