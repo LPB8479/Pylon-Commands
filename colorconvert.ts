@@ -7,11 +7,16 @@ config.commands.on(
     description: 'Convert between different color formats'
   },
   (args) => ({
-    color_format: args.string(),
-    color_value: args.text()
+    color_format: args.stringOptional(),
+    color_value: args.textOptional()
   }),
   async (message, { color_format, color_value }) => {
     // Sanitize & standardize input
+    if (color_format == null) {
+      var searchType = 'hex';
+      var searchParam = Math.floor(Math.random()*16777215).toString(16);
+    }
+    else {
     if (color_value == null) {
       if (color_format.includes('#')) {
         var searchType = 'hex';
@@ -37,7 +42,7 @@ config.commands.on(
         var searchType = color_format;
         var searchParam = color_value.replace(/\s+/g, '');
       }
-    }
+    }}
     // Make API request
     const requrl = `https://www.thecolorapi.com/id?&${searchType}=${searchParam}`;
     const req = await fetch(requrl);
