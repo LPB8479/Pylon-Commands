@@ -7,9 +7,15 @@
 */
 const config: Config = {};
 
+/*
+NORMAL: add role on reaction add, remove role on reaction remove
+VERIFY: add role and remove reaction on reaction add. Do not allow role removal.
+REVERSE: remove role on reaction add, add role on reaction remove
+REVERSE_VERIFY: remove role and reaction on reaction remove. Do not allow role addition.
+ */
 interface ReactionRoleConfig {
 	role: string;
-	mode: 'NORMAL' | 'VERIFY' | 'REVERSE';
+	mode: 'NORMAL' | 'VERIFY' | 'REVERSE' | 'REVERSE_VERIFY';
 }
 
 interface Config {
@@ -39,11 +45,11 @@ discord.on(discord.Event.MESSAGE_REACTION_ADD, async reaction => {
 
 	if (['NORMAL', 'VERIFY'].includes(config.mode))
 		await reaction.member!.addRole(config.role);
-	if (['REVERSE'].includes(config.mode))
+	if (['REVERSE', 'REVERSE_VERIFY'].includes(config.mode))
 		await reaction.member!.removeRole(config.role);
 	const channel = (await discord.getGuildTextChannel(reaction.channelId))!;
 	const message = (await channel.getMessage(reaction.messageId))!;
-	if (['VERIFY'].includes(config.mode))
+	if (['VERIFY', 'REVERSE_VERIFY'].includes(config.mode))
 		message.deleteReaction(
 			emojiIdentifier,
 			reaction.member!.user.id.toString(),
