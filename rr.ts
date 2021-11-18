@@ -12,10 +12,11 @@ NORMAL: add role on reaction add, remove role on reaction remove
 VERIFY: add role and remove reaction on reaction add. Do not allow role removal.
 REVERSE: remove role on reaction add, add role on reaction remove
 REVERSE_VERIFY: remove role and reaction on reaction remove. Do not allow role addition.
+TOGGLE: toggle role and remove reaction on reaction add.
  */
 interface ReactionRoleConfig {
 	role: string;
-	mode: 'NORMAL' | 'VERIFY' | 'REVERSE' | 'REVERSE_VERIFY';
+	mode: 'NORMAL' | 'VERIFY' | 'REVERSE' | 'REVERSE_VERIFY' | 'TOGGLE';
 }
 
 interface Config {
@@ -43,9 +44,9 @@ discord.on(discord.Event.MESSAGE_REACTION_ADD, async reaction => {
 	let config = getReactionConfig(reaction);
 	if (!config) return;
 
-	if (['NORMAL', 'VERIFY'].includes(config.mode))
+	if (['NORMAL', 'VERIFY'].includes(config.mode) || ['TOGGLE'].includes(config.mode) && !reaction.member!.hasRole(config.role)) {
 		await reaction.member!.addRole(config.role);
-	if (['REVERSE', 'REVERSE_VERIFY'].includes(config.mode))
+	if (['REVERSE', 'REVERSE_VERIFY'].includes(config.mode) || ['TOGGLE'].includes(config.mode) && reaction.member!.hasRole(config.role))
 		await reaction.member!.removeRole(config.role);
 	const channel = (await discord.getGuildTextChannel(reaction.channelId))!;
 	const message = (await channel.getMessage(reaction.messageId))!;
