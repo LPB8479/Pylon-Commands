@@ -44,9 +44,9 @@ discord.on(discord.Event.MESSAGE_REACTION_ADD, async reaction => {
 	let config = getReactionConfig(reaction);
 	if (!config) return;
 
-	if (['NORMAL', 'VERIFY'].includes(config.mode) || ['TOGGLE'].includes(config.mode) && !reaction.member!.hasRole(config.role)) {
+	if (['NORMAL', 'VERIFY'].includes(config.mode) || (['TOGGLE'].includes(config.mode) && !reaction.member!.hasRole(config.role))) {
 		await reaction.member!.addRole(config.role);
-	if (['REVERSE', 'REVERSE_VERIFY'].includes(config.mode) || ['TOGGLE'].includes(config.mode) && reaction.member!.hasRole(config.role))
+	if (['REVERSE', 'REVERSE_VERIFY'].includes(config.mode) || (['TOGGLE'].includes(config.mode) && reaction.member!.hasRole(config.role)))
 		await reaction.member!.removeRole(config.role);
 	const channel = (await discord.getGuildTextChannel(reaction.channelId))!;
 	const message = (await channel.getMessage(reaction.messageId))!;
