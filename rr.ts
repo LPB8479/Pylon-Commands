@@ -9,7 +9,7 @@ const config: Config = {};
 
 interface ReactionRoleConfig {
 	role: string;
-	mode: 'NORMAL' | 'VERIFY';
+	mode: 'NORMAL' | 'VERIFY' | 'REVERSE';
 }
 
 interface Config {
@@ -37,7 +37,10 @@ discord.on(discord.Event.MESSAGE_REACTION_ADD, async reaction => {
 	let config = getReactionConfig(reaction);
 	if (!config) return;
 
-	await reaction.member!.addRole(config.role);
+	if (['NORMAL', 'VERIFY'].includes(config.mode))
+		await reaction.member!.addRole(config.role);
+	if (['REVERSE'].includes(config.mode))
+		await reaction.member!.removeRole(config.role);
 	const channel = (await discord.getGuildTextChannel(reaction.channelId))!;
 	const message = (await channel.getMessage(reaction.messageId))!;
 	if (['VERIFY'].includes(config.mode))
@@ -53,9 +56,11 @@ discord.on(discord.Event.MESSAGE_REACTION_REMOVE, async reaction => {
 	let config = getReactionConfig(reaction);
 	if (!config) return;
 
-	if (['VERIFY'].includes(config.mode)) return;
+	if (['REVERSE'].includes(config.mode))
+		await reaction.member!.addRole(config.role);
+	if (['NORMAL'].includes(config.mode))
+		await reaction.member!.removeRole(config.role);
 
-	await reaction.member!.removeRole(config.role);
 	const channel = (await discord.getGuildTextChannel(reaction.channelId))!;
 	const message = (await channel.getMessage(reaction.messageId))!;
 });
