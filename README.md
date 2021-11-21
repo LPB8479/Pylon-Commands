@@ -6,7 +6,7 @@ A recreation of Carl-bot commands and features in Pylon
 - `ban` and `kick` commands with modlogs
 - `addemoji`
 - `ping`
-- `cembed`
+- `embed` and `cembed`
 - `role` command with most if not all subcommands
 - `setnick`
 - `echo`
