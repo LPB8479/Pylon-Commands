@@ -26,7 +26,9 @@ export interface config {
 		modlog: pylon.KVNamespace;
 	};
 	rr: {
+		/** message ID */
 		[key: string]: {
+			/** emoji ID or unicode */
 			[key: string]: ReactionRoleConfig;
 		};
 	};
