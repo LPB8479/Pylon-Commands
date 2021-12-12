@@ -1,29 +1,11 @@
-/*
-{
-    "msgID": {
-        "emoji id or unicode": ReactionRoleConfig
-    }
-}
-*/
-const config: Config = {};
-
-interface ReactionRoleConfig {
-	role: string;
-	mode: 'NORMAL' | 'VERIFY' | 'REVERSE' | 'REVERSE_VERIFY' | 'TOGGLE';
-}
-
-interface Config {
-	[key: string]: {
-		[key: string]: ReactionRoleConfig;
-	};
-}
+import {config, ReactionRoleConfig} from './config';
 
 function getReactionConfig(
 	event:
 		| discord.Event.IMessageReactionAdd
 		| discord.Event.IMessageReactionRemove,
 ): ReactionRoleConfig | null {
-	let msgConfig = config[event.messageId];
+	let msgConfig = config.rr[event.messageId];
 	if (!msgConfig) return null;
 	let reactionConfig = msgConfig[event.emoji.id || event.emoji.name!];
 	if (!reactionConfig) return null;
