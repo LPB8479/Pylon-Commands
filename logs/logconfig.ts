@@ -30,5 +30,6 @@ export const logConfig = {
     channelUpdate: true,
     channelDelete: true,
     guildUpdate: true
-  }
+  },
+  messageLogIgnore: ['270148059269300224'] /*Add other blacklisted ids (both channels and members) separated by commas and spaced. The existing id is for Pylon itself.*/ 
 };

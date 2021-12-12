@@ -447,7 +447,11 @@ discord.on(discord.Event.MESSAGE_DELETE, async (event, message) => {
   let delChannel = (await discord
     .getGuild()
     .then((g) => g.getChannel(message?.channelId!))) as MessageChannel;
-  if (logConfig.messageLogToggle.messageDelete == true) {
+  if (
+    logConfig.messageLogToggle.messageDelete == true &&
+    (logConfig.messageLogIgnore.includes(message.author.id) ||
+      logConfig.messageLogIgnore.includes(message.channelId))
+  ) {
     await channel?.sendMessage(
       new discord.Embed({
         title: `Message deleted in #${delChannel?.name}`,
@@ -474,7 +478,11 @@ discord.on(discord.Event.MESSAGE_UPDATE, async (newMessage, oldMessage) => {
   let delChannel = (await discord
     .getGuild()
     .then((g) => g.getChannel(oldMessage?.channelId!))) as MessageChannel;
-  if (logConfig.messageLogToggle.messageEdit == true) {
+  if (
+    logConfig.messageLogToggle.messageEdit == true &&
+    (logConfig.messageLogIgnore.includes(message.author.id) ||
+      logConfig.messageLogIgnore.includes(message.channelId))
+  ) {
     await channel?.sendMessage(
       new discord.Embed({
         title: `Message edited in #${delChannel?.name}`,
@@ -632,7 +640,9 @@ discord.on(discord.Event.GUILD_ROLE_UPDATE, async (event, old) => {
     }
     if (event.role.permissions !== old.permissions) {
       const diff = makePermissionDiff(event.role.permissions, old.permissions);
-      const diffBlock = `\`\`\`diff\n${diff.added.length ? diff.added.join('\n') : ''}${diff.removed.length ? '\n' + diff.removed.join('\n') : ''}󠁡\n\`\`\``;
+      const diffBlock = `\`\`\`diff\n${
+        diff.added.length ? diff.added.join('\n') : ''
+      }${diff.removed.length ? '\n' + diff.removed.join('\n') : ''}󠁡\n\`\`\``;
       messages.push({
         color: 4359924,
         type: 'rich',
