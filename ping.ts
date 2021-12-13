@@ -14,3 +14,4 @@ config.commands.raw(
     await message.reply(`Pong! (${now - snowflakeTimestamp}ms)`);
   }
 );
+//test
