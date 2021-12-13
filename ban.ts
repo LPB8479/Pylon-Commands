@@ -1,5 +1,5 @@
 import { config } from '../config';
-
+//Usage: [p]ban <member> [reason]
 config.commands.on(
   {
     name: 'ban',

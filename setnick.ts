@@ -1,5 +1,5 @@
 import { config } from '../config';
-
+//Usage: [p]setnick <member> <new nick>
 config.commands.on(
   {
     name: 'setnick',

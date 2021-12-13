@@ -3,7 +3,8 @@ async function urlToArrayBuffer(url: string) {
   const emoji = await (await fetch(url)).arrayBuffer();
   return emoji;
 }
-
+/*Usage: [p]addemoji <emoji name> <emoji url>
+         [p]addemoji color <color>*/
 config.commands.subcommand(
   {
     name: 'addemoji',

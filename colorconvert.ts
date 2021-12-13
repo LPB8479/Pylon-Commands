@@ -1,5 +1,5 @@
 import { config } from '../config';
-
+//Usage: [p][convert|color|clr] [color format] [color value]
 config.commands.on(
   {
     name: 'convert',

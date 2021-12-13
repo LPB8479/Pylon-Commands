@@ -1,5 +1,9 @@
 import { config } from '../config';
-
+/*Usage: [p]role <member> <role id>
+         [p]role create <name> <color>
+         [p]role add <member> <role id>
+         [p]role remove <member> <role id>
+         [p]role color <role id> <new color>*/
 config.commands.subcommand(
   {
     filters: discord.command.filters.canManageRoles(),
@@ -38,7 +42,6 @@ config.commands.subcommand(
 
     subcommand.on(
       'add',
-      //     &role add <member> <role>
       (args) => ({
         target: args.guildMember(),
         roleInput: args.string()
@@ -59,7 +62,6 @@ config.commands.subcommand(
 
     subcommand.on(
       'remove',
-      //     &role remove <member> <role>
       (args) => ({
         target: args.guildMember(),
         roleInput: args.string()

@@ -1,5 +1,5 @@
 import { config } from '../config';
-
+//Usage: [p]react <channel> <message id> <emoji(s)>
 config.commands.on(
   {
     filters: discord.command.filters.canManageMessages(),

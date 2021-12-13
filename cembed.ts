@@ -1,5 +1,5 @@
 import { config } from '../config';
-
+//Usage: [p]cembed <paste key>
 config.commands.on(
   {
     filters: discord.command.filters.canManageMessages(),

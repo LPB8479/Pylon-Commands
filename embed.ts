@@ -1,5 +1,5 @@
 import { config } from '../config/config';
-
+//Usage: [p]embed <channel> <color> <title|description>
 config.commands.on(
   {
     filters: discord.command.filters.canManageMessages(),

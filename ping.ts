@@ -1,5 +1,5 @@
 import { config } from '../config';
-
+//Usage: [p]ping
 config.commands.raw(
   {
     name: 'ping',
@@ -14,4 +14,3 @@ config.commands.raw(
     await message.reply(`Pong! (${now - snowflakeTimestamp}ms)`);
   }
 );
-//test

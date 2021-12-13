@@ -1,6 +1,5 @@
 import { config } from '../config/config';
-
-// Example usage: `!echo foobar` OR `!repeat foobar`
+//Usage: [p]echo [channel] <message>
 config.commands.on(
   {
     name: 'echo',

@@ -1,5 +1,5 @@
 import { config } from '../config';
-
+//Usage: [p]clonechannel <base channel> <new channel name>
 config.commands.on(
   {
     filters: discord.command.filters.canManageChannels(),
