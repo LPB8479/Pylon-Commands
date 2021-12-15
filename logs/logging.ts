@@ -480,8 +480,8 @@ discord.on(discord.Event.MESSAGE_UPDATE, async (newMessage, oldMessage) => {
     .then((g) => g.getChannel(oldMessage?.channelId!))) as MessageChannel;
   if (
     logConfig.messageLogToggle.messageEdit == true &&
-    (logConfig.messageLogIgnore.includes(message.author.id) ||
-      logConfig.messageLogIgnore.includes(message.channelId))
+    ((logConfig.messageLogIgnore.includes(oldMessage.author.id)) == false ||
+      (logConfig.messageLogIgnore.includes(oldMessage.channelId)) == false)
   ) {
     await channel?.sendMessage(
       new discord.Embed({
