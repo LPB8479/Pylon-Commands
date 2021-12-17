@@ -23,7 +23,7 @@ config.commands.on(
     }
     await message.reply(`Kicked **${member.user.getTag()}**.`);
     await member.kick();
-    const channel = await discord.getGuildTextChannel('875212427132805180');
+    const channel = await discord.getGuildTextChannel(config.channel.modlog);
     let uses = await UsesCounter('count');
     // Assemble embed
     var embed = new discord.Embed();
