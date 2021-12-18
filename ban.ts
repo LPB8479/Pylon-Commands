@@ -22,7 +22,7 @@ config.commands.on(
       return nextValue!;
     }
     await message.reply(`Banned **${member.user.getTag()}**.`);
-    await member.ban();
+    await member.ban({reason: `${reason}.`});
     const channel = await discord.getGuildTextChannel(config.channel.modlog);
     let uses = await UsesCounter('count');
     // Assemble embed
