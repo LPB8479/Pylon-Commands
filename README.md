@@ -32,5 +32,5 @@ For all files except `logconfig`and `config`:
 ```import 'filename';```
 (do NOT include the file extension here)
 
-
+**Be sure to watch this repo or check back occasionally for updates and additions**
 #### Huge thanks to Asty`#8926 and asportnoy#6969 for their help
