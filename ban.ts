@@ -5,6 +5,7 @@ config.commands.on(
     name: 'ban',
     description: 'Ban another user',
     filters: discord.command.filters.canBanMembers()
+    //  filters: discord.command.filters.hasRole(config.userrole.moderator)
   },
 
   (args) => ({
@@ -12,7 +13,7 @@ config.commands.on(
     reason: args.textOptional()
   }),
   async (message, { member, reason }) => {
-    async function UsesCounter(key: any, by: number = 1): Promise<number> {
+    function UsesCounter(key: any, by: number = 1): Promise<number> {
       const nextValue = await config.kv.modlog.transact<number>(
         key,
         (prevValue = 0) => {
@@ -22,7 +23,7 @@ config.commands.on(
       return nextValue!;
     }
     await message.reply(`Banned **${member.user.getTag()}**.`);
-    await member.ban({reason: `${reason}.`});
+    await member.ban({ reason: `${reason}.` });
     const channel = await discord.getGuildTextChannel(config.channel.modlog);
     let uses = await UsesCounter('count');
     // Assemble embed
