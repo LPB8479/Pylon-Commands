@@ -14,6 +14,8 @@ export const config = {
     modrole: '000000000000000000'
   },
   kv: {
-    modlog: new pylon.KVNamespace('modlog')
+    modlog: new pylon.KVNamespace('modlog'),
+    drama: new pylon.KVNamespace('drama'),
+    tempmute: new pylon.KVNamespace('tempmute')
   }
 };
