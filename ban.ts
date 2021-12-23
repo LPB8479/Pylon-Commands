@@ -5,7 +5,7 @@ config.commands.on(
     name: 'ban',
     description: 'Ban another user',
     filters: discord.command.filters.canBanMembers()
-    //  filters: discord.command.filters.hasRole(config.userrole.moderator)
+    //  filters: discord.command.filters.hasRole(config.role.moderator)
   },
 
   (args) => ({
@@ -13,7 +13,7 @@ config.commands.on(
     reason: args.textOptional()
   }),
   async (message, { member, reason }) => {
-    function UsesCounter(key: any, by: number = 1): Promise<number> {
+    async function UsesCounter(key: any, by: number = 1): Promise<number> {
       const nextValue = await config.kv.modlog.transact<number>(
         key,
         (prevValue = 0) => {

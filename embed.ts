@@ -1,10 +1,11 @@
-import { config } from '../config/config';
+import { config } from '../config';
 //Usage: [p]embed <channel> <color> <title|description>
 config.commands.on(
   {
-    filters: discord.command.filters.canManageMessages(),
-    name: 'embed',
-    description: 'Send a simple embed'
+  name: 'embed',
+  description: 'Send a simple embed',
+  filters: discord.command.filters.canManageMessages()
+  //  filters: discord.command.filters.hasRole(config.role.moderator)
   },
   (args) => ({
     channel: args.guildTextChannel(),

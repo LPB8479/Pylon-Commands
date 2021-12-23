@@ -1,4 +1,4 @@
-import { config } from '../config/config';
+import { config } from '../config';
 //Usage: [p]embedsource <message id> [channel]
 config.commands.on(
     {
@@ -10,7 +10,7 @@ config.commands.on(
         channel: args.guildTextChannelOptional()
     }),
     async (message, { messageID, channel }) => {
-        var basechannel = channel == null ? await message.getChannel() : await discord.getGuildTextChannel(channel)
+        var basechannel = channel == null ? await message.getChannel() : await discord.getGuildTextChannel(channel.id)
         var targetMessage = await basechannel.getMessage(messageID);
         const embeds = targetMessage?.embeds.map((e) => {
             return e.serialize();
