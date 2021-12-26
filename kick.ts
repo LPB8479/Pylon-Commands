@@ -5,7 +5,7 @@ config.commands.on(
     name: 'kick',
     description: 'Kick another user',
     filters: discord.command.filters.canKickMembers()
-    //  filters: discord.command.filters.hasRole(config.userrole.moderator)
+    //  filters: discord.command.filters.hasRole(config.role.moderator)
   },
 
   (args) => ({
@@ -31,7 +31,7 @@ config.commands.on(
     embed.setTitle(`Kick | Case ${uses}`);
     embed.setColor(0x4c88ff);
     embed.setDescription(
-      `**Offender:** ${member.user.getTag()} ${member.user.toMention()}\n**Reason:**' ${reason}'\n**Responsible moderator:**${message.author.getTag()}`
+      `**Offender:** ${member.user.getTag()} ${member.user.toMention()}\n**Reason:** ${reason}\n**Responsible moderator:**${message.author.getTag()}`
     );
     embed.setFooter({ text: `ID: ${member.user.id}` });
     embed.setTimestamp(new Date().toISOString());

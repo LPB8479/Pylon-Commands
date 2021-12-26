@@ -31,7 +31,7 @@ config.commands.on(
     embed.setTitle(`ban | Case ${uses}`);
     embed.setColor(0xdd5e53);
     embed.setDescription(
-      `**Offender:** ${member.user.getTag()} ${member.user.toMention()}\n**Reason:**' ${reason}'\n**Responsible moderator:**${message.author.getTag()}`
+      `**Offender:** ${member.user.getTag()} ${member.user.toMention()}\n**Reason:** ${reason}\n**Responsible moderator:**${message.author.getTag()}`
     );
     embed.setFooter({ text: `ID: ${member.user.id}` });
     embed.setTimestamp(new Date().toISOString());
