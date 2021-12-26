@@ -60,6 +60,7 @@ config.commands.on(
     const cmyk = data.cmyk.value;
     const imageUrl = `https://res.cloudinary.com/demo/image/upload/w_150,h_200,e_colorize,co_rgb:${hexNumber}/one_pixel.jpg`;
     const decimal = parseInt(hexNumber, 16);
+    const binary = (parseInt(hexNumber, 16).toString(2)).padStart(8, '0')
     const infoUrl = `https://encycolorpedia.com/${hexNumber}`;
     // Get information about opposite color
     const invRed = 255 - red;
@@ -78,6 +79,7 @@ config.commands.on(
     const invCmyk = invData.cmyk.value;
     const invImageUrl = `https://res.cloudinary.com/demo/image/upload/w_350,h_50,e_colorize,co_rgb:${invHexNumber}/one_pixel.jpg`;
     const invDecimal = parseInt(invHexNumber, 16);
+    const invBinary = (parseInt(invHexNumber, 16).toString(2)).padStart(8, '0')
     const invInfoUrl = `https://encycolorpedia.com/${invHexNumber}`;
     if (rgb.includes('NaN')) {
       message.reply(
@@ -88,7 +90,7 @@ config.commands.on(
       var embed = new discord.Embed();
       embed.setColor(decimal);
       embed.setDescription(
-        `**[Color Information](${infoUrl})**\nName: \`${name}\`\nHex: \`${hexDisp}\`\nRGB: \`${rgb}\`\nHSL: \`${hsl}\`\nHSV: \`${hsv}\`\nCMYK: \`${cmyk}\`\nDecimal: \`${decimal}\`\n\n**[Complimentary Color](${invInfoUrl})**\nName: \`${invName}\`\nHex: \`${invHexDisp}\`\nRGB: \`${invRgb}\`\nHSL: \`${invHsl}\`\nHSV: \`${invHsv}\`\nCMYK: \`${invCmyk}\`\nDecimal: \`${invDecimal}\``
+        `**[Color Information](${infoUrl})**\nName: \`${name}\`\nHex: \`${hexDisp}\`\nRGB: \`${rgb}\`\nHSL: \`${hsl}\`\nHSV: \`${hsv}\`\nCMYK: \`${cmyk}\`\nDecimal: \`${decimal}\`\nBinary: \`${binary}\`\n\n**[Complimentary Color](${invInfoUrl})**\nName: \`${invName}\`\nHex: \`${invHexDisp}\`\nRGB: \`${invRgb}\`\nHSL: \`${invHsl}\`\nHSV: \`${invHsv}\`\nCMYK: \`${invCmyk}\`\nDecimal: \`${invDecimal}\`\nBinary: \`${invBinary}\``
       );
       embed.setThumbnail({ url: imageUrl });
       embed.setImage({ url: invImageUrl });
