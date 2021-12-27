@@ -4,6 +4,7 @@ amconfig.ts
 automod.ts
 mute.ts
 verify.ts
+report.ts
 global.d.ts
 tsconfig.json
 LICENSE
