@@ -7,7 +7,8 @@ export const config = {
   }),
   channel: {
     welcome: '000000000000000000',
-    modlog: '000000000000000000'
+    modlog: '000000000000000000',
+    report: '000000000000000000'
   },
   role: {
     muterole: '000000000000000000',
