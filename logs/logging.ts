@@ -325,7 +325,7 @@ discord.on(discord.Event.GUILD_MEMBER_UPDATE, async (member, oldMember) => {
             await channel?.sendMessage(
               new discord.Embed({
                 title: `Nickname ${title}`,
-                description: `**Before:** ${before}\n**After:** ${after}}`,
+                description: `**Before:** ${before}\n**After:** ${after}`,
                 color: 0x4286f4,
                 author: {
                   name: oldMember.user.getTag(),
@@ -345,7 +345,7 @@ discord.on(discord.Event.GUILD_MEMBER_UPDATE, async (member, oldMember) => {
               await channel?.sendMessage(
                 new discord.Embed({
                   title: 'Discriminator update',
-                  description: `**Before:** ${oldMember.user.discriminator}\n**After:** ${member.user.discriminator}}`,
+                  description: `**Before:** ${oldMember.user.discriminator}\n**After:** ${member.user.discriminator}`,
                   color: 0x4286f4,
                   author: {
                     name: oldMember.user.getTag(),
@@ -368,7 +368,7 @@ discord.on(discord.Event.GUILD_MEMBER_UPDATE, async (member, oldMember) => {
                 await channel?.sendMessage(
                   new discord.Embed({
                     title: 'Name change',
-                    description: `**Before:** ${before}\n**After:** ${after}}`,
+                    description: `**Before:** ${before}\n**After:** ${after}`,
                     color: 0x4286f4,
                     author: {
                       name: oldMember.user.getTag(),
