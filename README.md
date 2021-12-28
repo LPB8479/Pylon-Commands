@@ -19,18 +19,18 @@ A recreation of Carl-bot commands and features in Pylon
 I'd love for this system to work in many servers, not just mine. If you would like to request an addition or would like to suggest a change, please add it under the "Issues" tab. If you know typescript and are willing to contribute, please make a pull request and I'll review it as soon as I can.
 
 ## Instructions:
-Once you have added Pylon to your server and opened the code editor, do the following for each file you want to add (note: all of these commands require you to add the `config` file, and the logging system requires the `logconfig` file):
+Once you have added Pylon to your server and opened the code editor, do the following for each file you want to add (note: All commands need you to add the entire functions folder and the config/config file. Automod and logging also have their own config files which you need to add. Be sure to keep the folder structure as shown in the repo.):
 - Create a new file
-- Name it `filename.ts` (the file extension is important)
+- Name it `foldername/filename.ts` (the file extension is important)
 - Copy and paste the code from Github into the code editor
 - If you are adding a config file or one that has a comment labeled "config", edit the values as needed to fit your server
 - Click "Publish Script" or `ctrl + s`
 
-For all files except `logconfig`and `config`:
+For all files except config and function files:
 - Open the `main.ts` file
 - Add the following:
-```import 'filename';```
+```import 'foldername/filename';```
 (do NOT include the file extension here)
 
 **Be sure to watch this repo or check back occasionally for updates and additions**
-#### Huge thanks to Asty`#8926 and asportnoy#6969 for their help
+#### Huge thanks to Asty`#8926, asportnoy#6969 and Juno#6096 for their help
