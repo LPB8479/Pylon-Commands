@@ -11,7 +11,7 @@ config.commands.on(
     }),
     async (message, { messageID, channel }) => {
         var basechannel = channel == null ? await message.getChannel() : await discord.getGuildTextChannel(channel.id)
-        var targetMessage = await basechannel.getMessage(messageID);
+        var targetMessage = await basechannel?.getMessage(messageID);
         const embeds = targetMessage?.embeds.map((e) => {
             return e.serialize();
           });
