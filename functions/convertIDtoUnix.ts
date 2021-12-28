@@ -1,4 +1,4 @@
-export function convertIDtoUnix(snowflake) {
+export function convertIDtoUnix(snowflake: number) {
   // snowflake to date object
   const date = new Date(Math.floor(snowflake / 4194304) + 1420070400000);
   // date object to unix
