@@ -1,6 +1,6 @@
 import { logConfig } from '../config/logconfig';
 import { decimalToHex } from '../functions/decimalToHex';
-import { convertIDtoUnix } from '../functions/convertIDtoUnix'
+import { convertIDtoUnix } from '../functions/convertIDtoUnix';
 
 type MessageChannel = discord.GuildTextChannel | discord.GuildNewsChannel;
 //FUNCTIONS
@@ -116,7 +116,7 @@ export function makePermissionDiff(
       .map((e) => `- ${capitalizeWords(e.toLowerCase().replace(/_/g, ' '))}`)
   };
 }
-function ord(number: string | number) {
+function ord(number: number) {
   // If the provided argument is not a number, return "NaN"
   if (isNaN(number)) return 'NaN';
 
@@ -144,7 +144,7 @@ function ord(number: string | number) {
   return finalOrd;
 }
 function timedelta /*for {user(joined_at)}*/(snowflake: string) {
-  var unixValue = convertIDtoUnix(snowflake.toString());
+  var unixValue = convertIDtoUnix(parseInt(snowflake));
   var now = Math.floor(Date.now() / 1000);
   const fn = timeDifference(now, unixValue).filter(
     (time) => time.includes('0') == false
@@ -462,8 +462,8 @@ discord.on(discord.Event.MESSAGE_UPDATE, async (newMessage, oldMessage) => {
     .then((g) => g.getChannel(oldMessage?.channelId!))) as MessageChannel;
   if (
     logConfig.messageLogToggle.messageEdit == true &&
-    ((logConfig.messageLogIgnore.includes(oldMessage.author.id)) == false ||
-      (logConfig.messageLogIgnore.includes(oldMessage.channelId)) == false)
+    (logConfig.messageLogIgnore.includes(oldMessage.author.id) == false ||
+      logConfig.messageLogIgnore.includes(oldMessage.channelId) == false)
   ) {
     await channel?.sendMessage(
       new discord.Embed({
