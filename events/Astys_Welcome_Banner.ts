@@ -40,7 +40,7 @@ discord.on('GUILD_MEMBER_ADD', async (user) => {
       : '';
   var textshad = textShadow == 'yes' ? '/e_shadow:5,x_1,y_1,co_black' : '';
 
-  var mention = shouldMention == 'yes' ? await channel.sendMessage(user.toMention()) : '';
+  var mention = shouldMention == 'yes' ? await channel?.sendMessage(user.toMention()) : '';
 
   const name = user.user.username.replace(' ', '⠀');
 
@@ -49,5 +49,5 @@ discord.on('GUILD_MEMBER_ADD', async (user) => {
   embed.setImage({ url: banner });
   embed.setColor(0x7ed321);
   embed.setDescription(messageAboveBanner);
-  if (user.user.bot == false) {await channel.sendMessage(embed);}
+  if (user.user.bot == false) {await channel?.sendMessage(embed);}
 });
