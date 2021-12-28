@@ -27,6 +27,6 @@ config.commands.on(
     );
     embed.setFooter({ text: `ID: ${member.user.id}` });
     embed.setTimestamp(new Date().toISOString());
-    await channel.sendMessage(embed);
+    await channel?.sendMessage(embed);
   }
 );
