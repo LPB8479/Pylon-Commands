@@ -1,4 +1,4 @@
-import { config } from '../config';
+import { config } from '../config/config';
 //Usage: [p]cembed <paste key>
 config.commands.on(
   {

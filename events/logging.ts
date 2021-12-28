@@ -1,4 +1,6 @@
 import { logConfig } from '../config/logconfig';
+import { decimalToHex } from '../functions/decimalToHex';
+import { convertIDtoUnix } from '../functions/convertIDtoUnix'
 
 type MessageChannel = discord.GuildTextChannel | discord.GuildNewsChannel;
 //FUNCTIONS
@@ -48,18 +50,6 @@ function timeDifference(now: number, unixValue: number) {
   var rep = tdString.replace(/0.\s/g, '');
   var tdArray = rep.split(',');
   return tdArray;
-}
-function decimalToHex(d: number, padding: number | null) {
-  var hex = Number(d).toString(16);
-  padding =
-    typeof padding === 'undefined' || padding === null
-      ? (padding = 2)
-      : padding;
-
-  while (hex.length < padding) {
-    hex = '0' + hex;
-  }
-  return hex;
 }
 function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -154,14 +144,6 @@ function ord(number: string | number) {
   return finalOrd;
 }
 function timedelta /*for {user(joined_at)}*/(snowflake: string) {
-  //Convert Discord snowflake to unix time value
-  function convertIDtoUnix(snowflake) {
-    // snowflake to date object
-    const date = new Date(Math.floor(snowflake / 4194304) + 1420070400000);
-    // date object to unix
-    const unix = parseInt((new Date(date).getTime() / 1000).toFixed(0));
-    return unix;
-  }
   var unixValue = convertIDtoUnix(snowflake.toString());
   var now = Math.floor(Date.now() / 1000);
   const fn = timeDifference(now, unixValue).filter(

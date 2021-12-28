@@ -1,4 +1,4 @@
-import { config } from '../config';
+import { config } from '../config/config';
 //Usage: [p]react <channel> <message id> <emoji(s)>
 config.commands.on(
   {

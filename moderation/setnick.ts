@@ -1,4 +1,4 @@
-import { config } from '../config';
+import { config } from '../config/config';
 //Usage: [p]setnick <member> <new nick>
 config.commands.on(
   {

@@ -1,4 +1,4 @@
-import { config } from '../config';
+import { config } from '../config/config';
 //Usage: [p][convert|color|clr] [color format] [color value]
 config.commands.on(
   {

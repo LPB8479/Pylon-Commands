@@ -1,4 +1,6 @@
-import { config } from '../config';
+import { config } from '../config/config';
+import { convertIDtoUnix } from '../functions/convertIDtoUnix'
+
 function timeDiff(timestamp: any) {
   var eventDate = new Date(timestamp);
   var nowDate = new Date(Date.now()); // get total seconds between the times
@@ -46,13 +48,6 @@ function timeDiff(timestamp: any) {
     output.push(seconds == 1 ? `${seconds} second` : `${seconds} seconds`);
   }
   return `${output[0]}, ${output[1]}, and ${output[2]} ago`;
-}
-function convertIDtoUnix(snowflake: number) {
-  // snowflake to date object
-  const date = new Date(Math.floor(snowflake / 4194304) + 1420070400000);
-  // date object to unix
-  const unix = parseInt((new Date(date).getTime() / 1000).toFixed(0));
-  return unix;
 }
 
 //Usage: [p]report <message>

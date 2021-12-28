@@ -1,11 +1,13 @@
-import { config } from '../config';
+import { config } from '../config/config';
+import { modlogCount } from '../functions/modlogCount'
+
 //Usage: [p]warn <member> [reason]
 config.commands.on(
   {
     name: 'warn',
     description: 'Warn another user',
     filters: discord.command.filters.canManageRoles()
-    //  filters: discord.command.filters.hasRole(config.role.moderator)
+    //  filters: discord.command.filters.hasRole(config.role.modrole)
   },
 
   (args) => ({
@@ -13,18 +15,9 @@ config.commands.on(
     reason: args.textOptional()
   }),
   async (message, { member, reason }) => {
-    async function UsesCounter(key: any, by: number = 1): Promise<number> {
-      const nextValue = await config.kv.modlog.transact<number>(
-        key,
-        (prevValue = 0) => {
-          return prevValue + by;
-        }
-      );
-      return nextValue!;
-    }
     await message.reply(`**${member.user.getTag()}** has been warned.\n**Reason:** ${reason}`);
     const channel = await discord.getGuildTextChannel(config.channel.modlog);
-    let uses = await UsesCounter('count');
+    let uses = await modlogCount('count');
     // Assemble embed
     var embed = new discord.Embed();
     embed.setTitle(`Warn | Case ${uses}`);

@@ -1,4 +1,4 @@
-import { config } from '../config';
+import { config } from '../config/config';
 //Usage: [p]getid <input string>
 config.commands.on(
   {

@@ -1,4 +1,4 @@
-import { config } from '../config';
+import { config } from '../config/config';
 /*Usage: [p]role <member> <role id>
          [p]role create <name> <color>
          [p]role add <member> <role id>

@@ -1,4 +1,4 @@
-import { config } from '../config';
+import { config } from '../config/config';
 //Usage: [p]clonechannel <base channel> <new channel name>
 config.commands.on(
   {
@@ -15,6 +15,7 @@ config.commands.on(
     const parent = baseChannel.parentId;
     const server = await message.getGuild();
     await server.createChannel({
+      type: discord.Channel.Type.GUILD_TEXT,
       name: channelName,
       permissionOverwrites: perms,
       parentId: parent
