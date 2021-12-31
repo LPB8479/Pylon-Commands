@@ -7,7 +7,9 @@ const timeValues = [
     ['second', 1]
 ];
 
-export function humanDelta(delta: number) {
+export function timeDelta(unix: number) {
+    var nowSecs = Date.now()
+    var delta = (nowSecs - unix)/1000
     const texts = [];
 
     timeValues.forEach(([name, factor]) => {
