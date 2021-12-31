@@ -1,56 +1,10 @@
 import { logConfig } from '../config/logconfig';
 import { decimalToHex } from '../functions/decimalToHex';
 import { convertIDtoUnix } from '../functions/convertIDtoUnix';
+import { timeDelta } from '../functions/timeDelta'
 
 type MessageChannel = discord.GuildTextChannel | discord.GuildNewsChannel;
 //FUNCTIONS
-function timeDifference(now: number, unixValue: number) {
-  var difference = now - unixValue;
-  var yearsCalc = Math.floor(difference / 31536000);
-  difference = difference % 31536000;
-  var yearsDifference = `${yearsCalc} year`;
-  if (yearsCalc != 1) {
-    yearsDifference += 's';
-  }
-
-  var monthsCalc = Math.floor(difference / 2628288);
-  difference = difference % 2628288;
-  var monthsDifference = `${monthsCalc} month`;
-  if (monthsCalc != 1) {
-    monthsDifference += 's';
-  }
-
-  var daysCalc = Math.floor(difference / 86400);
-  difference = difference % 86400;
-  var daysDifference = `${daysCalc} day`;
-  if (daysCalc != 1) {
-    daysDifference += 's';
-  }
-
-  var hoursCalc = Math.floor(difference / 3600);
-  difference = difference % 3600;
-  var hoursDifference = `${hoursCalc} hour`;
-  if (hoursCalc != 1) {
-    hoursDifference += 's';
-  }
-
-  var minutesCalc = Math.floor(difference / 60);
-  difference = difference % 60;
-  var minutesDifference = `${minutesCalc} minute`;
-  if (minutesCalc != 1) {
-    minutesDifference += 's';
-  }
-
-  var secondsCalc = difference;
-  var secondsDifference = `${secondsCalc} second`;
-  if (secondsCalc != 1) {
-    secondsDifference += 's';
-  }
-  var tdString = `${yearsDifference}, ${monthsDifference}, ${daysDifference}, ${hoursDifference}, ${minutesDifference}, ${secondsDifference}`;
-  var rep = tdString.replace(/0.\s/g, '');
-  var tdArray = rep.split(',');
-  return tdArray;
-}
 function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -143,14 +97,6 @@ function ord(number: number) {
   let finalOrd = number + finalAbbr;
   return finalOrd;
 }
-function timedelta /*for {user(joined_at)}*/(snowflake: string) {
-  var unixValue = convertIDtoUnix(parseInt(snowflake));
-  var now = Math.floor(Date.now() / 1000);
-  const fn = timeDifference(now, unixValue).filter(
-    (time) => time.includes('0') == false
-  );
-  return `${fn[0]}, ${fn[1]} and ${fn[2]}`;
-}
 
 //MEMBER JOIN LOGS
 discord.on(discord.Event.GUILD_MEMBER_ADD, async (user) => {
@@ -165,7 +111,7 @@ discord.on(discord.Event.GUILD_MEMBER_ADD, async (user) => {
         title: `Member joined`,
         description: `${user.toMention} ${ord(
           members
-        )} to join\nCreated ${timedelta(user.user.id)} ago`,
+        )} to join\nCreated ${timeDelta(convertIDtoUnix(user.user.id))} ago`,
         color: 0x53dbac,
         author: {
           name: user.user.getTag(),
@@ -185,24 +131,13 @@ discord.on(discord.Event.GUILD_MEMBER_REMOVE, async (member, oldMember) => {
   let channel = (await discord.getGuildTextChannel(
     logConfig.logChannels.joinLeaveLogChannelID
   ))!;
-  // Get time since joined
-  function timedelta(timestamp: string) {
-    //Get Timestamp
-    const unixValue = Date.parse(new Date(timestamp)) / 1000;
-    var now = Math.floor(Date.now() / 1000);
-    const fn = timeDifference(now, unixValue).filter(
-      (time) => time.includes('0') == false
-    );
-    return `${fn[0]}, ${fn[1]} and ${fn[2]}`;
-  }
+  var joinDate = Date.parse(oldMember.joinedAt) 
   // Make embed
   if (logConfig.joinLeaveLogToggle.memberLeave == true) {
     await channel?.sendMessage(
       new discord.Embed({
         title: `Member left`,
-        description: `${oldMember.toMention()} joined ${timedelta(
-          oldMember.joinedAt
-        )} ago`,
+        description: `${oldMember.toMention()} joined ${timeDelta(joinDate)} ago`,
         color: 0xfff6af,
         author: {
           name: oldMember.user.getTag(),
@@ -431,8 +366,8 @@ discord.on(discord.Event.MESSAGE_DELETE, async (event, message) => {
     .then((g) => g.getChannel(message?.channelId!))) as MessageChannel;
   if (
     logConfig.messageLogToggle.messageDelete == true &&
-    (logConfig.messageLogIgnore.includes(message.author.id) ||
-      logConfig.messageLogIgnore.includes(message.channelId))
+    ((logConfig.messageLogIgnore.includes(message.author.id) ||
+      logConfig.messageLogIgnore.includes(message.channelId)) == false)
   ) {
     await channel?.sendMessage(
       new discord.Embed({
@@ -460,11 +395,11 @@ discord.on(discord.Event.MESSAGE_UPDATE, async (newMessage, oldMessage) => {
   let delChannel = (await discord
     .getGuild()
     .then((g) => g.getChannel(oldMessage?.channelId!))) as MessageChannel;
-  if (
-    logConfig.messageLogToggle.messageEdit == true &&
-    (logConfig.messageLogIgnore.includes(oldMessage.author.id) == false ||
-      logConfig.messageLogIgnore.includes(oldMessage.channelId) == false)
-  ) {
+    if (
+      logConfig.messageLogToggle.messageDelete == true &&
+      ((logConfig.messageLogIgnore.includes(oldMessage?.author.id) ||
+        logConfig.messageLogIgnore.includes(oldMessage?.channelId)) == false)
+    ) {
     await channel?.sendMessage(
       new discord.Embed({
         title: `Message edited in #${delChannel?.name}`,
@@ -701,7 +636,7 @@ discord.on(discord.Event.CHANNEL_CREATE, async (anyChannel) => {
       name:
         role != null
           ? 'Role override for '.concat(role.name)
-          : 'User override for '.concat(permMember.user.getTag()),
+          : 'User override for '.concat(permMember?.user.getTag()),
       value: `**Read messages:** ${emoji}`
     });
   }
@@ -709,10 +644,10 @@ discord.on(discord.Event.CHANNEL_CREATE, async (anyChannel) => {
     await logChannel?.sendMessage(
       new discord.Embed({
         title: 'Text channel created',
-        description: `**Name:** ${newChannel.name}\n**Category:** ${channelCategory.name}`,
+        description: `**Name:** ${newChannel?.name}\n**Category:** ${channelCategory?.name}`,
         color: 0x53ddad,
         fields: arr,
-        footer: { text: `Channel ID: ${newChannel.id}` },
+        footer: { text: `Channel ID: ${newChannel?.id}` },
         timestamp: new Date().toISOString()
       })
     );
@@ -728,7 +663,7 @@ discord.on(discord.Event.CHANNEL_UPDATE, async (channel, oldChannel) => {
   for await (const event of guild.iterAuditLogs({ limit: 1 })) {
     console.log(event);
     const eventString = JSON.stringify(event.changes);
-    if (logConfig.serverLogToggle.cha == true) {
+    if (logConfig.serverLogToggle.channelUpdate == true) {
       var before = '';
       var after = '';
       if (event.actionType == 11) {
