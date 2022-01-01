@@ -7,7 +7,7 @@ config.commands.on(
     name: 'warn',
     description: 'Warn another user',
     filters: discord.command.filters.canManageRoles()
-    //  filters: discord.command.filters.hasRole(config.role.modrole)
+    //  filters: discord.command.filters.hasRole(config.role.modRole)
   },
 
   (args) => ({

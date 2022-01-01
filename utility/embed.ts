@@ -5,7 +5,7 @@ config.commands.on(
   name: 'embed',
   description: 'Send a simple embed',
   filters: discord.command.filters.canManageMessages()
-  //  filters: discord.command.filters.hasRole(config.role.modrole)
+  //  filters: discord.command.filters.hasRole(config.role.modRole)
   },
   (args) => ({
     channel: args.guildTextChannel(),

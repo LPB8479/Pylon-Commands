@@ -6,7 +6,7 @@ config.commands.on(
     name: 'ban',
     description: 'Ban another user',
     filters: discord.command.filters.canBanMembers()
-    //  filters: discord.command.filters.hasRole(config.role.modrole)
+    //  filters: discord.command.filters.hasRole(config.role.modRole)
   },
 
   (args) => ({

@@ -6,7 +6,7 @@ config.commands.on(
     name: 'kick',
     description: 'Kick another user',
     filters: discord.command.filters.canKickMembers()
-    //  filters: discord.command.filters.hasRole(config.role.modrole)
+    //  filters: discord.command.filters.hasRole(config.role.modRole)
   },
 
   (args) => ({
