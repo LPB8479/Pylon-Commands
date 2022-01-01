@@ -9,11 +9,11 @@ export const config = {
     welcome: '000000000000000000',
     modlog: '000000000000000000',
     report: '000000000000000000',
-    rules: '000000000000000000'
+    drama: '000000000000000000'
   },
   role: {
-    muterole: '000000000000000000',
-    modrole: '000000000000000000'
+    muteRole: '000000000000000000',
+    modRole: '000000000000000000'
   },
   kv: {
     modlog: new pylon.KVNamespace('modlog'),

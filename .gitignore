@@ -1,7 +1,5 @@
 #files for WIP projects
 #ignore this file
-amconfig.ts
-automod.ts
 mute.ts
 verify.ts
 global.d.ts
