@@ -48,26 +48,17 @@ function bitfieldToArray(bitfield: number) {
   });
 }
 function removeArrayOverlap(arr1: any[], arr2: any[]) {
-  let difference = arr1
-    .filter((x) => !arr2.includes(x))
-    .concat(arr2.filter((x) => !arr1.includes(x)));
+  let difference = arr1.filter((x) => !arr2.includes(x)).concat(arr2.filter((x) => !arr1.includes(x)));
   return difference;
 }
 export function capitalizeWords(s: string) {
   return s.replace(/(^|[ ])./g, (e) => e.toUpperCase());
 }
-export function makePermissionDiff(
-  newPermissions: number,
-  oldPermissions: number
-) {
+export function makePermissionDiff(newPermissions: number, oldPermissions: number) {
   // i can barely read this code lol
   return {
-    added: bitfieldToArray(newPermissions)
-      .filter((e) => !bitfieldToArray(oldPermissions).includes(e))
-      .map((e) => `+ ${capitalizeWords(e.toLowerCase().replace(/_/g, ' '))}`),
-    removed: bitfieldToArray(oldPermissions)
-      .filter((e) => !bitfieldToArray(newPermissions).includes(e))
-      .map((e) => `- ${capitalizeWords(e.toLowerCase().replace(/_/g, ' '))}`)
+    added: bitfieldToArray(newPermissions).filter((e) => !bitfieldToArray(oldPermissions).includes(e)).map((e) => `+ ${capitalizeWords(e.toLowerCase().replace(/_/g, ' '))}`),
+    removed: bitfieldToArray(oldPermissions).filter((e) => !bitfieldToArray(newPermissions).includes(e)).map((e) => `- ${capitalizeWords(e.toLowerCase().replace(/_/g, ' '))}`)
   };
 }
 function ord(number: number) {
@@ -75,10 +66,10 @@ function ord(number: number) {
   if (isNaN(number)) return 'NaN';
 
   // Stores the last digit of the provided number
-  number = number.toString();
-  let numArr = number.split('');
+  var numberStr = number.toString();
+  let numArr = numberStr.split('');
   let lastDigit = Number(numArr[numArr.length - 1]);
-  number = Number(number);
+  var numberNum = Number(number);
 
   // Constant variables
   const numbers = [1, 2, 3];
@@ -88,30 +79,22 @@ function ord(number: number) {
 
   let lastDigitIndex = numbers.indexOf(lastDigit);
   // Stores the final abbreviation based on conditions. Uses the ternary operator(s)
-  let finalAbbr = exceptions.includes(number)
-    ? defaultLetter
-    : numbers[lastDigitIndex]
-    ? letters[lastDigitIndex]
-    : defaultLetter;
+  let finalAbbr = exceptions.includes(numberNum) ? defaultLetter : numbers[lastDigitIndex] ? letters[lastDigitIndex] : defaultLetter;
   // Formats and returns the number and its final abbreviation
-  let finalOrd = number + finalAbbr;
+  let finalOrd = numberNum + finalAbbr;
   return finalOrd;
 }
 
 //MEMBER JOIN LOGS
 discord.on(discord.Event.GUILD_MEMBER_ADD, async (user) => {
-  let channel = (await discord.getGuildTextChannel(
-    logConfig.logChannels.joinLeaveLogChannelID
-  ))!;
+  let channel = (await discord.getGuildTextChannel(logConfig.logChannels.joinLeaveLogChannelID))!;
   const guild = await discord.getGuild();
   const members = guild.memberCount;
   if (logConfig.joinLeaveLogToggle.memberJoin == true) {
     await channel?.sendMessage(
       new discord.Embed({
         title: `Member joined`,
-        description: `${user.toMention} ${ord(
-          members
-        )} to join\nCreated ${timeDelta(convertIDtoUnix(user.user.id))} ago`,
+        description: `${user.toMention} ${ord(members)} to join\nCreated ${timeDelta(convertIDtoUnix(user.user.id))} ago`,
         color: 0x53dbac,
         author: {
           name: user.user.getTag(),
@@ -128,9 +111,7 @@ discord.on(discord.Event.GUILD_MEMBER_ADD, async (user) => {
 
 //MEMBER LEAVE LOGS
 discord.on(discord.Event.GUILD_MEMBER_REMOVE, async (member, oldMember) => {
-  let channel = (await discord.getGuildTextChannel(
-    logConfig.logChannels.joinLeaveLogChannelID
-  ))!;
+  let channel = (await discord.getGuildTextChannel(logConfig.logChannels.joinLeaveLogChannelID))!;
   var joinDate = Date.parse(oldMember.joinedAt) 
   // Make embed
   if (logConfig.joinLeaveLogToggle.memberLeave == true) {
@@ -155,38 +136,15 @@ discord.on(discord.Event.GUILD_MEMBER_REMOVE, async (member, oldMember) => {
 //MEMBER UPDATE LOGS
 discord.on(discord.Event.GUILD_MEMBER_UPDATE, async (member, oldMember) => {
   if (member.user.id != '270148059269300224') {
-    let channel = (await discord
-      .getGuild()
-      .then((g) =>
-        g.getChannel(logConfig.logChannels.memberLogChannelID)
-      )) as MessageChannel;
+    let channel = (await discord.getGuild().then((g) => g.getChannel(logConfig.logChannels.memberLogChannelID))) as MessageChannel;
     //Role(s) Changed
     if (member.roles.toString() != oldMember.roles.toString()) {
-      var difference1 = oldMember.roles.filter(
-        (x) => member.roles.indexOf(x) === -1
-      );
-      var difference2 = member.roles.filter(
-        (x) => oldMember.roles.indexOf(x) === -1
-      );
+      var difference1 = oldMember.roles.filter((x) => member.roles.indexOf(x) === -1);
+      var difference2 = member.roles.filter((x) => oldMember.roles.indexOf(x) === -1);
       var diffArray = difference1.concat(difference2);
       var diffstring = diffArray.toString();
-      var output =
-        Math.abs(member.roles.length - oldMember.roles.length) ==
-        diffArray.length
-          ? `<@&${diffstring.replace(/,/g, '>, <@&')}>`
-          : `**Added:** <@&${difference2
-              .toString()
-              .replace(
-                /,/g,
-                '>, <@&'
-              )}>\n**Removed:** <@&${difference1
-              .toString()
-              .replace(/,/g, '>, <@&')}>`;
-      var title = output.includes('**')
-        ? 'updated'
-        : member.roles.length > oldMember.roles.length
-        ? 'added'
-        : 'removed';
+      var output = (Math.abs(member.roles.length - oldMember.roles.length) == diffArray.length) ? `<@&${diffstring.replace(/,/g, '>, <@&')}>` : `**Added:** <@&${difference2.toString().replace(/,/g, '>, <@&')}>\n**Removed:** <@&${difference1.toString().replace(/,/g, '>, <@&')}>`;
+      var title = output.includes('**') ? 'updated' : member.roles.length > oldMember.roles.length ? 'added' : 'removed';
       //Make log embed
       if (logConfig.memberLogToggle.memberRoleUpdates == true) {
         await channel?.sendMessage(
@@ -229,14 +187,8 @@ discord.on(discord.Event.GUILD_MEMBER_UPDATE, async (member, oldMember) => {
       } else {
         //nickname change
         if (member.nick != oldMember.nick) {
-          var title =
-            oldMember.nick == null
-              ? 'added'
-              : member.nick == null
-              ? 'removed'
-              : 'change';
-          var before =
-            oldMember.nick == null ? member.user.username : oldMember.nick;
+          var title = oldMember.nick == null ? 'added' : member.nick == null ? 'removed' : 'change';
+          var before = oldMember.nick == null ? member.user.username : oldMember.nick;
           var after = member.nick == null ? member.user.username : member.nick;
           if (logConfig.memberLogToggle.memberNicknameChange == true) {
             await channel?.sendMessage(
@@ -308,9 +260,7 @@ discord.on(discord.Event.GUILD_MEMBER_UPDATE, async (member, oldMember) => {
 
 //MEMBER BAN LOGS (not modlogs)
 discord.on(discord.Event.GUILD_BAN_ADD, async (guildBan) => {
-  let channel = (await discord.getGuildTextChannel(
-    logConfig.logChannels.memberLogChannelID
-  ))!;
+  let channel = (await discord.getGuildTextChannel(logConfig.logChannels.memberLogChannelID))!;
   if (logConfig.memberLogToggle.memberBans == true) {
     await channel?.sendMessage(
       new discord.Embed({
@@ -333,9 +283,7 @@ discord.on(discord.Event.GUILD_BAN_ADD, async (guildBan) => {
 
 //MEMBER UNBAN LOGS (not modlogs)
 discord.on(discord.Event.GUILD_BAN_REMOVE, async (guildBan) => {
-  let channel = (await discord.getGuildTextChannel(
-    logConfig.logChannels.memberLogChannelID
-  ))!;
+  let channel = (await discord.getGuildTextChannel(logConfig.logChannels.memberLogChannelID))!;
   if (logConfig.memberLogToggle.memberUnbans == true) {
     await channel?.sendMessage(
       new discord.Embed({
@@ -358,17 +306,9 @@ discord.on(discord.Event.GUILD_BAN_REMOVE, async (guildBan) => {
 
 //MESSAGE DELETE LOGS
 discord.on(discord.Event.MESSAGE_DELETE, async (event, message) => {
-  let channel = (await discord.getGuildTextChannel(
-    logConfig.logChannels.messageLogChannelID
-  ))!;
-  let delChannel = (await discord
-    .getGuild()
-    .then((g) => g.getChannel(message?.channelId!))) as MessageChannel;
-  if (
-    logConfig.messageLogToggle.messageDelete == true &&
-    ((logConfig.messageLogIgnore.includes(message.author.id) ||
-      logConfig.messageLogIgnore.includes(message.channelId)) == false)
-  ) {
+  let channel = (await discord.getGuildTextChannel(logConfig.logChannels.messageLogChannelID))!;
+  let delChannel = (await discord.getGuild().then((g) => g.getChannel(message?.channelId!))) as MessageChannel;
+  if (logConfig.messageLogToggle.messageDelete == true && ((logConfig.messageLogIgnore.includes(message?.author.id!) || logConfig.messageLogIgnore.includes(message?.channelId!)) == false)) {
     await channel?.sendMessage(
       new discord.Embed({
         title: `Message deleted in #${delChannel?.name}`,
@@ -389,17 +329,9 @@ discord.on(discord.Event.MESSAGE_DELETE, async (event, message) => {
 
 //MESSAGE EDIT
 discord.on(discord.Event.MESSAGE_UPDATE, async (newMessage, oldMessage) => {
-  let channel = (await discord.getGuildTextChannel(
-    logConfig.logChannels.messageLogChannelID
-  ))!;
-  let delChannel = (await discord
-    .getGuild()
-    .then((g) => g.getChannel(oldMessage?.channelId!))) as MessageChannel;
-    if (
-      logConfig.messageLogToggle.messageDelete == true &&
-      ((logConfig.messageLogIgnore.includes(oldMessage?.author.id) ||
-        logConfig.messageLogIgnore.includes(oldMessage?.channelId)) == false)
-    ) {
+  let channel = (await discord.getGuildTextChannel(logConfig.logChannels.messageLogChannelID))!;
+  let delChannel = (await discord.getGuild().then((g) => g.getChannel(oldMessage?.channelId!))) as MessageChannel;
+    if (logConfig.messageLogToggle.messageDelete == true && ((logConfig.messageLogIgnore.includes(oldMessage?.author.id!) || logConfig.messageLogIgnore.includes(oldMessage?.channelId!)) == false) ) {
     await channel?.sendMessage(
       new discord.Embed({
         title: `Message edited in #${delChannel?.name}`,
@@ -421,18 +353,13 @@ discord.on(discord.Event.MESSAGE_UPDATE, async (newMessage, oldMessage) => {
 //ROLE CREATE LOGS
 discord.on(discord.Event.GUILD_ROLE_CREATE, async (event) => {
   const guild = await discord.getGuild();
-  let logChannel = (await guild.getChannel(
-    logConfig.logChannels.serverLogChannelID
-  )) as MessageChannel;
+  let logChannel = (await guild.getChannel( logConfig.logChannels.serverLogChannelID )) as MessageChannel;
   const newRole = event.role;
   if (logConfig.serverLogToggle.roleCreate == true) {
     await logChannel?.sendMessage(
       new discord.Embed({
         title: 'New role created',
-        description: `**Name:** ${newRole.name}\n**Color:** ${decimalToHex(
-          newRole.color,
-          6
-        )}\n**Mentionable:** ${newRole.mentionable.toString()}\n**Displayed separately:** ${newRole.hoist.toString()}`,
+        description: `**Name:** ${newRole.name}\n**Color:** ${decimalToHex( newRole.color, 6 )}\n**Mentionable:** ${newRole.mentionable.toString()}\n**Displayed separately:** ${newRole.hoist.toString()}`,
         color: 0x53ddad,
         footer: { text: `Role ID: ${event.role.id}` },
         timestamp: new Date().toISOString()
@@ -444,9 +371,7 @@ discord.on(discord.Event.GUILD_ROLE_CREATE, async (event) => {
 //ROLE UPDATE LOGS
 discord.on(discord.Event.GUILD_ROLE_UPDATE, async (event, old) => {
   const messages = [];
-  let logChannel = (await discord.getGuildTextChannel(
-    logConfig.logChannels.serverLogChannelID
-  ))!;
+  let logChannel = (await discord.getGuildTextChannel(logConfig.logChannels.serverLogChannelID))!;
   const timestamp = new Date().toISOString();
   const newRole = event.role;
   if (logConfig.serverLogToggle.roleUpdate == true) {
@@ -557,9 +482,7 @@ discord.on(discord.Event.GUILD_ROLE_UPDATE, async (event, old) => {
     }
     if (event.role.permissions !== old.permissions) {
       const diff = makePermissionDiff(event.role.permissions, old.permissions);
-      const diffBlock = `\`\`\`diff\n${
-        diff.added.length ? diff.added.join('\n') : ''
-      }${diff.removed.length ? '\n' + diff.removed.join('\n') : ''}󠁡\n\`\`\``;
+      const diffBlock = `\`\`\`diff\n${diff.added.length ? diff.added.join('\n') : ''}${diff.removed.length ? '\n' + diff.removed.join('\n') : ''}󠁡\n\`\`\``;
       messages.push({
         color: 4359924,
         type: 'rich',
@@ -570,43 +493,24 @@ discord.on(discord.Event.GUILD_ROLE_UPDATE, async (event, old) => {
       });
     }
     //Send messages
-    console.log(JSON.stringify(messages[0]));
-    for (var step = 0; step < messages.length; step++) {
-      await logChannel?.sendMessage(new discord.Embed(messages[step]));
-    }
+    messages.forEach(async (message) => {
+      await logChannel?.sendMessage(new discord.Embed(message))
+    })
   }
 });
 
 //ROLE DELETE LOGS
 discord.on(discord.Event.GUILD_ROLE_DELETE, async (event, oldRole) => {
-  let logChannel = (await discord.getGuildTextChannel(
-    logConfig.logChannels.serverLogChannelID
-  ))!;
+  let logChannel = (await discord.getGuildTextChannel(logConfig.logChannels.serverLogChannelID))!;
   const guild = await discord.getGuild();
-  const everyoneRole = await guild.getRole(guild.id);
   for await (const event of guild.iterAuditLogs({ limit: 1 })) {
-    console.log(event);
     if (logConfig.serverLogToggle.roleDelete == true) {
       if (event.actionType == 32) {
-        var perms = removeArrayOverlap(
-          bitfieldToArray(event.changes.permissions.oldValue),
-          bitfieldToArray(everyoneRole.permissions)
-        ).toString();
+        var perms = removeArrayOverlap(bitfieldToArray(event.changes.permissions.oldValue), bitfieldToArray(oldRole?.permissions!)).toString();
         await logChannel?.sendMessage(
           new discord.Embed({
             title: `Role "${event.changes.name.oldValue}" deleted`,
-            description: `**Name:** ${
-              event.changes.name.oldValue
-            }\n**Color:** #${decimalToHex(
-              event.changes.color.oldValue,
-              6
-            )}\n**Mentionable:** ${capitalizeFirstLetter(
-              event.changes.mentionable.oldValue.toString()
-            )}\n**Displayed separately:** ${capitalizeFirstLetter(
-              event.changes.hoist.oldValue.toString()
-            )}\n**Specific perms:** ${
-              perms == '' ? 'N/A' : perms.replace(',', ', ')
-            }`,
+            description: `**Name:** ${event.changes.name.oldValue}\n**Color:** #${decimalToHex(event.changes.color.oldValue, 6)}\n**Mentionable:** ${capitalizeFirstLetter(event.changes.mentionable.oldValue.toString())}\n**Displayed separately:** ${capitalizeFirstLetter(event.changes.hoist.oldValue.toString())}\n**Specific perms:** ${perms == '' ? 'N/A' : perms.replace(',', ', ')}`,
             color: 0xdd5e53,
             footer: { text: `Role ID: ${event.targetId}` },
             timestamp: new Date().toISOString()
@@ -619,24 +523,19 @@ discord.on(discord.Event.GUILD_ROLE_DELETE, async (event, oldRole) => {
 
 //CHANNEL CREATE LOGS
 discord.on(discord.Event.CHANNEL_CREATE, async (anyChannel) => {
-  let logChannel = (await discord.getGuildTextChannel(
-    logConfig.logChannels.serverLogChannelID
-  ))!;
+  let logChannel = (await discord.getGuildTextChannel(logConfig.logChannels.serverLogChannelID))!;
   const guild = await discord.getGuild();
   var newChannel = await guild.getChannel(anyChannel.id);
-  var channelCategory = await discord.getGuildCategory(newChannel.parentId);
-  var channelPerms = newChannel.permissionOverwrites;
+  var channelCategory = await discord.getGuildCategory(newChannel?.parentId!);
+  var channelPerms = newChannel?.permissionOverwrites;
   let arr = [];
-  for (var counter = 0; counter < channelPerms.length; counter++) {
-    var role = await guild.getRole(channelPerms[counter].id);
-    var permMember = await guild.getMember(channelPerms[counter].id);
-    var emoji = channelPerms[counter].deny === 1024 ? '❌' : '✅';
+  for (var counter = 0; counter < channelPerms!.length; counter++) {
+    var role = await guild.getRole(channelPerms![counter].id);
+    var permMember = await guild.getMember(channelPerms![counter].id);
+    var emoji = channelPerms![counter].deny === 1024 ? '❌' : '✅';
     arr.push({
       inline: false,
-      name:
-        role != null
-          ? 'Role override for '.concat(role.name)
-          : 'User override for '.concat(permMember?.user.getTag()),
+      name: role != null ? 'Role override for '.concat(role.name) : 'User override for '.concat(permMember!.user.getTag()),
       value: `**Read messages:** ${emoji}`
     });
   }
@@ -656,40 +555,25 @@ discord.on(discord.Event.CHANNEL_CREATE, async (anyChannel) => {
 
 //CHANNEL UPDATE LOGS
 discord.on(discord.Event.CHANNEL_UPDATE, async (channel, oldChannel) => {
-  let logChannel = (await discord.getGuildTextChannel(
-    logConfig.logChannels.serverLogChannelID
-  ))!;
+  let logChannel = (await discord.getGuildTextChannel( logConfig.logChannels.serverLogChannelID ))!;
   const guild = await discord.getGuild();
   for await (const event of guild.iterAuditLogs({ limit: 1 })) {
-    console.log(event);
     const eventString = JSON.stringify(event.changes);
     if (logConfig.serverLogToggle.channelUpdate == true) {
       var before = '';
       var after = '';
       if (event.actionType == 11) {
         if (eventString.includes('name')) {
-          before += `**Name:** ${event.changes.name.oldValue}\n`;
-          after += `**Name:** ${event.changes.name.newValue}\n`;
+          before += `**Name:** ${event.changes.name!.oldValue}\n`;
+          after += `**Name:** ${event.changes.name!.newValue}\n`;
         }
         if (eventString.includes('nsfw')) {
-          before += `**NSFW:** ${capitalizeFirstLetter(
-            event.changes.nsfw.oldValue.toString()
-          )}\n`;
-          after += `**NSFW:** ${capitalizeFirstLetter(
-            event.changes.nsfw.newValue.toString()
-          )}'\n`;
+          before += `**NSFW:** ${capitalizeFirstLetter(event.changes.nsfw!.oldValue!.toString())}\n`;
+          after += `**NSFW:** ${capitalizeFirstLetter(event.changes.nsfw!.newValue.toString())}'\n`;
         }
         if (eventString.includes('topic')) {
-          before += `**Topic:** ${
-            event.changes.topic.oldValue == undefined
-              ? 'none'
-              : event.changes.topic.oldValue
-          }\n`;
-          after += `**Topic:** ${
-            event.changes.topic.newValue == undefined
-              ? 'none'
-              : event.changes.topic.newValue
-          }\n`;
+          before += `**Topic:** ${event.changes.topic?.oldValue == undefined ? 'none' : event.changes.topic.oldValue}\n`;
+          after += `**Topic:** ${event.changes.topic?.newValue == undefined ? 'none' : event.changes.topic.newValue}\n`;
         }
         await logChannel?.sendMessage(
           new discord.Embed({
@@ -718,9 +602,7 @@ discord.on(discord.Event.CHANNEL_UPDATE, async (channel, oldChannel) => {
 
 //CHANNEL DELETE LOGS
 discord.on(discord.Event.CHANNEL_DELETE, async (channel) => {
-  let logChannel = (await discord.getGuildTextChannel(
-    logConfig.logChannels.serverLogChannelID
-  ))!;
+  let logChannel = (await discord.getGuildTextChannel(logConfig.logChannels.serverLogChannelID))!;
   var guild = await discord.getGuild();
   for await (const event of guild.iterAuditLogs({ limit: 1 })) {
     if (logConfig.serverLogToggle.channelDelete == true) {
