@@ -3,7 +3,7 @@ import { config } from '../config/config';
 config.commands.on(
   {
     name: 'convert',
-    aliases: ['convert', 'color', 'clr'],
+    aliases: ['convert', 'color', 'clr', 'colorconvert'],
     description: 'Convert between different color formats'
   },
   (args) => ({
