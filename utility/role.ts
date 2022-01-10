@@ -20,15 +20,12 @@ config.commands.subcommand(
       async (message, { newRoleName, newRoleColor }) => {
         const newColor = parseInt(newRoleColor, 16);
         const guild = await message.getGuild();
-        //  const existingRole = await guild.getRole(config.userrole.brightGreen);
-        const existingRole = await guild.getRole('872614847001538590');
-        const roleperms = await existingRole.permissions;
         await guild.createRole({
           color: newColor,
           name: newRoleName,
           hoist: false,
           mentionable: false,
-          permissions: roleperms
+          permissions: 0
         });
         await message.reply(
           new discord.Embed({
