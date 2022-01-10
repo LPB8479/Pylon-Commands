@@ -4,7 +4,7 @@ async function urlToArrayBuffer(url: string) {
   return emoji;
 }
 /*Usage: [p]addemoji <emoji name> <emoji url>
-         [p]addemoji color <color>*/
+         [p]addemoji color <emoji name> <color>*/
 config.commands.subcommand(
   {
     name: 'addemoji',
