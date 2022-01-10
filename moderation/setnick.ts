@@ -3,7 +3,7 @@ import { config } from '../config/config';
 config.commands.on(
   {
     name: 'setnick',
-    description: "Changes a member's Nickname",
+    description: "Change a member's Nickname",
     filters: discord.command.filters.canManageNicknames()
   },
   (args) => ({
