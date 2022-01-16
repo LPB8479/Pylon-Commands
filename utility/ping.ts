@@ -1,5 +1,5 @@
 import { config } from '../config/config';
-//Usage: [p]ping
+
 config.commands.raw(
   {
     name: 'ping',
@@ -12,5 +12,20 @@ config.commands.raw(
       (snowflake >> BigInt(22)) + BigInt(1420070400000)
     );
     await message.reply(`Pong! (${now - snowflakeTimestamp}ms)`);
+  }
+);
+
+config.slashCommands.register(
+  {
+    name: 'ping',
+    description: 'Replies with Pong!'
+  },
+  async (interaction) => {
+    const snowflake = BigInt(interaction.id);
+    const now = Date.now();
+    const snowflakeTimestamp = Number(
+      (snowflake >> BigInt(22)) + BigInt(1420070400000)
+    );
+    await interaction.respond(`Pong! (${now - snowflakeTimestamp}ms)`);
   }
 );
