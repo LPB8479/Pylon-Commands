@@ -61,29 +61,7 @@ export function makePermissionDiff(newPermissions: number, oldPermissions: numbe
     removed: bitfieldToArray(oldPermissions).filter((e) => !bitfieldToArray(newPermissions).includes(e)).map((e) => `- ${capitalizeWords(e.toLowerCase().replace(/_/g, ' '))}`)
   };
 }
-function ord(number: number) {
-  // If the provided argument is not a number, return "NaN"
-  if (isNaN(number)) return 'NaN';
-
-  // Stores the last digit of the provided number
-  var numberStr = number.toString();
-  let numArr = numberStr.split('');
-  let lastDigit = Number(numArr[numArr.length - 1]);
-  var numberNum = Number(number);
-
-  // Constant variables
-  const numbers = [1, 2, 3];
-  const exceptions = [11, 12, 13];
-  const letters = ['st', 'nd', 'rd', 'th'];
-  const defaultLetter = letters[letters.length - 1];
-
-  let lastDigitIndex = numbers.indexOf(lastDigit);
-  // Stores the final abbreviation based on conditions. Uses the ternary operator(s)
-  let finalAbbr = exceptions.includes(numberNum) ? defaultLetter : numbers[lastDigitIndex] ? letters[lastDigitIndex] : defaultLetter;
-  // Formats and returns the number and its final abbreviation
-  let finalOrd = numberNum + finalAbbr;
-  return finalOrd;
-}
+function ord(n: number){return n.toString() + ([,'st','nd','rd'][n%100>>3^1&&n%10]||'th')}
 
 //MEMBER JOIN LOGS
 discord.on(discord.Event.GUILD_MEMBER_ADD, async (user) => {
