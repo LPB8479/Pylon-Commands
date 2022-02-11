@@ -17,7 +17,7 @@ A recreation of Carl-bot commands and features in Pylon
 - and more
 
 ## Additional features and changes:
-I'd love for this system to work in many servers, not just mine. If you would like to request an addition or would like to suggest a change, please add it under the "Issues" tab. If you know typescript and are willing to contribute, please make a pull request and I'll review it as soon as I can.
+I'd love for this system to work in many servers, not just mine. If you would like to request an addition or would like to suggest a change, please add it under the "Issues" tab. If you know JavaScript/TypeScript and are willing to contribute, please make a pull request and I'll review it as soon as I can.
 
 ## Instructions:
 Once you have added Pylon to your server and opened the code editor, do the following for each file you want to add (note: All commands need you to add the entire functions folder and the config/config file. Automod and logging also have their own config files which you need to add. Be sure to keep the folder structure as shown in the repo.):
