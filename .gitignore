@@ -2,6 +2,7 @@
 #ignore this file
 mute.ts
 verify.ts
+vote.ts
 global.d.ts
 tsconfig.json
 LICENSE
