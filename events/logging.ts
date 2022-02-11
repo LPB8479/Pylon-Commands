@@ -2,50 +2,12 @@ import { logConfig } from '../config/logconfig';
 import { decimalToHex } from '../functions/decimalToHex';
 import { convertIDtoUnix } from '../functions/convertIDtoUnix';
 import { timeDelta } from '../functions/timeDelta'
+import { bitfieldToArray } from '../functions/bitfieldToArray';
 
 type MessageChannel = discord.GuildTextChannel | discord.GuildNewsChannel;
 //FUNCTIONS
 function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
-}
-function bitfieldToArray(bitfield: number) {
-  const permissions = [
-    'CREATE_INSTANT_INVITE',
-    'KICK_MEMBERS',
-    'BAN_MEMBERS',
-    'ADMINISTRATOR',
-    'MANAGE_CHANNELS',
-    'MANAGE_GUILD',
-    'ADD_REACTIONS',
-    'VIEW_AUDIT_LOG',
-    'PRIORITY_SPEAKER',
-    'STREAM',
-    'VIEW_CHANNEL',
-    'SEND_MESSAGES',
-    'SEND_TTS_MESSAGES',
-    'MANAGE_MESSAGES',
-    'EMBED_LINKS',
-    'ATTACH_FILES',
-    'READ_MESSAGE_HISTORY',
-    'MENTION_EVERYONE',
-    'USE_EXTERNAL_EMOJIS',
-    'VIEW_GUILD_ANALYTICS',
-    'CONNECT',
-    'SPEAK',
-    'MUTE_MEMBERS',
-    'DEAFEN_MEMBERS',
-    'MOVE_MEMBERS',
-    'USE_VAD',
-    'CHANGE_NICKNAME',
-    'CHANGE_NICKNAMES',
-    'MANAGE_ROLES',
-    'MANAGE_WEBHOOKS',
-    'MANAGE_EMOJIS'
-  ];
-  return permissions.filter((_, i) => {
-    const current = 1 << i;
-    return (bitfield & current) === current;
-  });
 }
 function removeArrayOverlap(arr1: any[], arr2: any[]) {
   let difference = arr1.filter((x) => !arr2.includes(x)).concat(arr2.filter((x) => !arr1.includes(x)));
