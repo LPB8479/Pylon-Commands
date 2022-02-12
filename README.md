@@ -1,5 +1,5 @@
 # Pylon-Commands
-A recreation of Carl-bot commands and features in Pylon
+A moderation and utility bot made with Pylon
 ## Features:
 - A full logging system
 - Customizable welcome banner originally made by `Asty'#8926`
