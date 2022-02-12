@@ -4,7 +4,8 @@ import { amConfig } from '../config/amconfig';
 config.commands.raw(
     {
         name: 'am',
-        description: 'Shows automod config'
+        description: 'Show current automod config',
+        filters: discord.command.filters.canManageMessages()
     },
     async (message) => {
         var guild = await discord.getGuild()
