@@ -1,5 +1,5 @@
 import { config } from '../config/config';
-//Usage: embed <channel> <color> <title|description>
+//Usage: help [command]
 config.commands.on(
     {
         name: 'help',
