@@ -23,6 +23,11 @@ config.commands.on(
                 var desc = 'Kick another member'
                 var perms = '`KICK MEMBERS`'
                 break
+            case 'am':
+                var category = 'moderation'
+                var syntax = '[p]am'
+                var desc = 'Show current automod config'
+                var perms = '`MANAGE MESSAGES`'
             case 'mute':
                 var category = 'moderation'
                 var syntax = '[p]mute <member> [reason]'
