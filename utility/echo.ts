@@ -12,16 +12,17 @@ config.commands.on(
   }),
   async (message, { input }) => {
     // Send a message
-    const messageArray = input
+    var messageArray = input
       .replace('<#', '')
       .replace('>', '')
       .split(' ');
-    const destChannel =
+    var indexOfSpace = input.indexOf(' ');
+    var destChannel =
       input.includes('#') == true
         ? await discord.getGuildTextChannel(messageArray[0].toString())
         : await message.getChannel();
     await destChannel?.sendMessage({
-      content: `${input.includes('#') ? messageArray.slice(1) : input}`,
+      content: `${input.includes('#') ? input.substring(indexOfSpace + 1) : input}`,
       allowedMentions: {} // Don't allow this message to ping anyone
     });
   }
