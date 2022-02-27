@@ -164,6 +164,17 @@ config.commands.on(
                 var desc = 'Change the color of a role'
                 var perms = '`MANAGE ROLES`'
                 break
+            case 'info':
+                var category = 'information'
+                var syntax = '[p]info [member]'
+                var aliases = 'i'
+                var desc = 'Get information about a user'
+                break
+            case 'how':
+                var category = 'information'
+                var syntax = '[p]how [keyword]'
+                var desc = 'Get information about how to use Discord, the server, and server bots'
+                break
             default:
                 var category = 'n/a'
         }
