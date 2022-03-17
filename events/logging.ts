@@ -248,7 +248,7 @@ discord.on(discord.Event.GUILD_BAN_REMOVE, async (guildBan) => {
 discord.on(discord.Event.MESSAGE_DELETE, async (event, message) => {
   let channel = (await discord.getGuildTextChannel(logConfig.logChannels.messageLogChannelID))!;
   let delChannel = (await discord.getGuild().then((g) => g.getChannel(message?.channelId!))) as MessageChannel;
-  if (logConfig.messageLogToggle.messageDelete == true && ((logConfig.messageLogIgnore.includes(message?.author.id!) || logConfig.messageLogIgnore.includes(message?.channelId!)) == false)) {
+  if (logConfig.messageLogToggle.messageDelete == true && ((logConfig.messageLogIgnore.includes(message?.author.id!) || logConfig.messageLogIgnore.includes(message?.channelId!)) == false) && message?.author.bot == false) {
     await channel?.sendMessage(
       new discord.Embed({
         title: `Message deleted in #${delChannel?.name}`,
@@ -271,7 +271,7 @@ discord.on(discord.Event.MESSAGE_DELETE, async (event, message) => {
 discord.on(discord.Event.MESSAGE_UPDATE, async (newMessage, oldMessage) => {
   let channel = (await discord.getGuildTextChannel(logConfig.logChannels.messageLogChannelID))!;
   let delChannel = (await discord.getGuild().then((g) => g.getChannel(oldMessage?.channelId!))) as MessageChannel;
-    if (logConfig.messageLogToggle.messageDelete == true && ((logConfig.messageLogIgnore.includes(oldMessage?.author.id!) || logConfig.messageLogIgnore.includes(oldMessage?.channelId!)) == false) ) {
+    if (logConfig.messageLogToggle.messageDelete == true && ((logConfig.messageLogIgnore.includes(oldMessage?.author.id!) || logConfig.messageLogIgnore.includes(oldMessage?.channelId!)) == false) && oldMessage?.author.bot == false) {
     await channel?.sendMessage(
       new discord.Embed({
         title: `Message edited in #${delChannel?.name}`,
