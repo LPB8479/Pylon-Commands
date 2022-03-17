@@ -19,9 +19,9 @@ config.commands.on(
                 footer: { text: `ID: ${member.user.id}` },
                 author: {
                     name: member.user.getTag(),
-                    iconUrl: member.user.getAvatarUrl()
+                    iconUrl: member.user.getAvatarUrl(discord.ImageType.PNG)
                 },
-                description: `[Avatar](${member.user.getAvatarUrl()})`,
+                description: `[Avatar](${member.user.getAvatarUrl(discord.ImageType.PNG)})`,
                 fields: [
                     {
                         inline: true,
