@@ -34,7 +34,7 @@ discord.on(discord.Event.GUILD_MEMBER_ADD, async (user) => {
     await channel?.sendMessage(
       new discord.Embed({
         title: `Member joined`,
-        description: `${user.toMention} ${ord(members)} to join\nCreated ${timeDelta(convertIDtoUnix(user.user.id))} ago`,
+        description: `${user.toMention()} ${ord(members)} to join\nCreated ${timeDelta(convertIDtoUnix(user.user.id))} ago`,
         color: 0x53dbac,
         author: {
           name: user.user.getTag(),
