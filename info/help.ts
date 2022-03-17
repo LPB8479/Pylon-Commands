@@ -165,16 +165,27 @@ config.commands.on(
                 var perms = '`MANAGE ROLES`'
                 break
             case 'info':
+            case 'i':
                 var category = 'information'
                 var syntax = '[p]info [member]'
                 var aliases = 'i'
-                var desc = 'Get information about a user'
+                var desc = 'Get information about a member'
                 break
             case 'how':
                 var category = 'information'
                 var syntax = '[p]how [keyword]'
                 var desc = 'Get information about how to use Discord, the server, and server bots'
                 break
+            case 'serverinfo':
+                var category = 'information'
+                var syntax = '[p]serverinfo'
+                var desc = 'Get information about the server'
+                break
+            case 'avatar':
+            case 'av':
+                var category = 'information'
+                var syntax = '[p]avatar [member]'
+                var desc = `Get a member's avatar in various formats`
             default:
                 var category = 'n/a'
         }
