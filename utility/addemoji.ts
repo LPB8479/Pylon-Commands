@@ -1,8 +1,4 @@
-import { config } from '../config/config';
-async function urlToArrayBuffer(url: string) {
-  const emoji = await (await fetch(url)).arrayBuffer();
-  return emoji;
-}
+import { config } from '../config/config'
 /*Usage: [p]addemoji <emoji name> <emoji url>
          [p]addemoji color <emoji name> <color>*/
 config.commands.subcommand(
@@ -19,16 +15,23 @@ config.commands.subcommand(
         hex: args.string()
       }),
       async (message, { emojiName, hex }) => {
-        const color = hex.replace('#', '').toLowerCase;
-        const emoji = urlToArrayBuffer(`https://res.cloudinary.com/demo/w_150,h_150/c_fill,r_max/e_colorize,co_rgb:${color}'/one_pixel.png`);
-        const guild = await message.getGuild();
-        await guild.createEmoji({
-          image: emoji,
-          name: emojiName
-        });
-        message.reply('Success!');
+        const guild = await message.getGuild()
+        try {
+          if (emojiName.length == 1) { throw ('❌ Emoji names must be at least two characters') }
+          if (((await message.getChannel()).canMember(await (guild.getMember(discord.getBotId())), discord.Permissions.MANAGE_EMOJIS)) == false) { throw ('⚠️ Missing permission: Manage_Emojis')}
+          const color = hex.replace('#', '').toLowerCase
+          const emoji = `https://res.cloudinary.com/demo/w_150,h_150/c_fill,r_max/e_colorize:100,co_rgb:${color}'/one_pixel.png`
+          await guild.createEmoji({
+            image: await fetch(emoji).then((x) => x.arrayBuffer()),
+            name: emojiName
+          })
+          await message.reply('Success!')
+        }
+        catch (err) {
+          await message.reply(err)
+        }
       }
-    );
+    )
 
     subcommand.default(
       (args) => ({
@@ -36,14 +39,20 @@ config.commands.subcommand(
         emojiUrl: args.string()
       }),
       async (message, { emojiName, emojiUrl }) => {
-        const emoji = urlToArrayBuffer(emojiUrl);
-        const guild = await message.getGuild();
-        await guild.createEmoji({
-          image: emoji,
-          name: emojiName
-        });
-        message.reply('Success!');
+        const guild = await message.getGuild()
+        try {
+          if (emojiName.length == 1) { throw ('❌ Emoji names must be at least two characters') }
+          if (((await message.getChannel()).canMember(await (guild.getMember(discord.getBotId())), discord.Permissions.MANAGE_EMOJIS)) == false) { throw ('⚠️ Missing permission: Manage_Emojis')}
+          await guild.createEmoji({
+            image: await fetch(emojiUrl).then((x) => x.arrayBuffer()),
+            name: emojiName
+          })
+          await message.reply('Success!')
+        }
+        catch (err) {
+          await message.reply(err)
+        }
       }
-    );
+    )
   }
-);
+)
