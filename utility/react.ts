@@ -1,30 +1,26 @@
-import { config } from '../config/config';
-//Usage: [p]react <channel> <message id> <emoji(s)>
+import { config } from '../config/config'
+//Usage: [p]react <channel> <message id> <emoji>
 config.commands.on(
   {
     filters: discord.command.filters.canManageMessages(),
     name: 'react',
-    description: 'Add reactions to a message'
+    description: 'Add a reaction to a message. Useful for setting up reaction roles'
   },
   (args) => ({
     channel: args.guildTextChannel(),
     messageID: args.string(),
-    emoji: args.text()
+    emoji: args.string()
   }),
   async (message, { channel, messageID, emoji }) => {
-    const messageObject = await channel.getMessage(messageID);
-    const emojiArray = emoji.split(' ');
-    for (let step = 0; step < emojiArray.length; step++) {
-      // For each emoji:
-      try {
-        var emojiRaw = emojiArray[step].replace('<:', '').replace('>', '');
-        await messageObject!.addReaction(emojiRaw);
-        await message.addReaction(':white_check_mark:');
-      } catch (err) {
-        await message.reply(
-          `Invalid Input. Make sure I am in the server containing \`${emojiArray[step]}\`.`
-        );
-      }
+    const messageObject = await channel.getMessage(messageID)
+    var cleanEmoji = emoji.replace('<:', '').replace('>', '')
+    try {
+      await messageObject?.addReaction(cleanEmoji);
+      await message.addReaction(`✅`)
+    } catch (err) {
+      await message.reply(
+        `❌ Invalid Input. Make sure I am in the server containing \`${emoji}\`.`
+      );
     }
   }
-);
+)
