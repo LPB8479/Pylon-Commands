@@ -129,8 +129,8 @@ config.commands.on(
                 break
             case 'react':
                 var category = 'bot management'
-                var syntax = '[p]react <channel> <message id> <emoji(s)>'
-                var desc = 'Add reactions to a message. Useful for setting up reaction roles'
+                var syntax = '[p]react <channel> <message id> <emoji>'
+                var desc = 'Add a reaction to a message. Useful for setting up reaction roles'
                 var perms = '`MANAGE MESSAGES`'
                 break
             case 'role':
