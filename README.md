@@ -3,6 +3,7 @@ A moderation and utility bot made with Pylon
 ## Features:
 - A full logging system
 - Customizable welcome banner originally made by `Asty'#8926`
+- Customizable and modular reaction role system
 - automod and `warn`, `ban` and `kick` commands with modlogs
 - `addemoji`
 - `ping`
@@ -10,7 +11,6 @@ A moderation and utility bot made with Pylon
 - `role` command with most if not all subcommands
 - `setnick`
 - `echo`
-- Reaction role in "verify" mode
 - `react` (adds a reaction to any message)
 - `clonechannel` (creates a new channel with permissions copied from another channel)
 - `color` (converts and gets information about a specified color)
