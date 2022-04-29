@@ -94,10 +94,26 @@ config.commands.on(
             case 'clr':
             case 'colorconvert':
                 var category = 'utility'
-                var syntax = '[p]convert [color format] [color value]'
-                var aliases = '`color`, `clr`, `colorconvert`'
+                var syntax = '[p]colorconvert [color format] [color value]'
+                var aliases = '`color`, `clr`, `convert`'
                 var desc = 'Convert between different color formats. Not including any arguments will generate a random color'
                 break
+            case 'convert avg':
+            case 'color avg':
+            case 'clr avg':
+            case 'colorconvert avg':
+            case 'convert av':
+            case 'color av':
+            case 'clr av':
+            case 'colorconvert av':
+            case 'convert average':
+            case 'color average':
+            case 'clr average':
+            case 'colorconvert average':
+                var category = 'utility'
+                var syntax = `[p]colorconvert average [hex string]`
+                var aliases = '`avg`, `av`'
+                var desc = 'Get the average of two or more colors'
             case 'repeat':
             case 'echo':
                 var category = 'bot management'
@@ -195,8 +211,8 @@ config.commands.on(
         if (category == 'n/a') {
             embed.setDescription('A discord bot made by LPB#0001 and hosted and run by Pylon.\nMade with TypeScript\n[Pylon](https://pylon.bot/)\n[Source Repo](https://github.com/LPB8479/Pylon-Commands)\n[Suggestions and Bug Reports](https://github.com/LPB8479/Pylon-Commands/issues/new)')
         } else {
-            if (aliases! != null && aliases != undefined) {desc! += `\n**Aliases:** ${aliases}`}
-            if (perms! != null && perms != undefined) {desc! += `\n**Required Permissions:** ${perms}`}
+            if (aliases! != null && aliases != undefined) { desc! += `\n**Aliases:** ${aliases}` }
+            if (perms! != null && perms != undefined) { desc! += `\n**Required Permissions:** ${perms}` }
             desc! += `\n ​`/*Whitespace character to add empty line*/
             embed.setDescription(desc!)
         }
