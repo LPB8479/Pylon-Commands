@@ -9,7 +9,7 @@ const timeValues = [
 
 export function timeDelta(unix: number) {
     var nowSecs = Date.now()
-    var delta = (nowSecs - unix)/1000
+    var delta = (nowSecs - unix)/10000
     const texts = [];
 
     timeValues.forEach(([name, factor]) => {
