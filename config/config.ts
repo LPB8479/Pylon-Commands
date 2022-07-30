@@ -17,6 +17,11 @@ export const config = {
     muteRole: '000000000000000000',
     modRole: '000000000000000000'
   },
+  api: {
+    rebrickableAPI: '',
+    bricksetAPI: '',
+    bricksetHash: ''
+  },
   kv: {
     modlog: new pylon.KVNamespace('modlog'),
     drama: new pylon.KVNamespace('drama'),
