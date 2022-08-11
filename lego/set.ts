@@ -41,9 +41,13 @@ config.commands.on(
       `https://brickset.com/api/v3.asmx/getSets?apiKey=${config.api.bricksetAPI}&userHash=${config.api.bricksetHash}&params=%7B%27setNumber%27%3A%27${set_number}%27%7D`
     );
     var data = await req.json();
-    var embed = parseAndEmbed(data, set_number);
-    // send embed
-    await message.reply({ content: '', embed: embed });
+    try {
+      var embed = parseAndEmbed(data, set_number);
+      // send embed
+      await message.reply({ content: '', embed: embed });
+    } catch (e) {
+      await message.reply('Invalid Input')
+    }
   }
 );
 
@@ -80,7 +84,8 @@ discord.on('MESSAGE_CREATE', async (message) => {
           .setThumbnail(imageurl)
           .setUrl(
             `https://www.bricklink.com/v2/catalog/catalogitem.page?S=${set_number}`
-          );
+          )
+          .setFooter({text: `Use &set ${set_number} for more information`});
         // send embed
         await message.reply({ content: '', embed: embed });
       }
