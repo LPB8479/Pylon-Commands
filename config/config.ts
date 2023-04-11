@@ -25,6 +25,7 @@ export const config = {
   kv: {
     modlog: new pylon.KVNamespace('modlog'),
     drama: new pylon.KVNamespace('drama'),
-    tempmute: new pylon.KVNamespace('tempmute')
+    tempmute: new pylon.KVNamespace('tempmute'),
+    lock: new pylon.KVNamespace('lock')
   }
 };
