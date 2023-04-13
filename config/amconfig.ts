@@ -19,20 +19,7 @@ export const amConfig = {
         whitelistedroles: [config.role.modRole, '000000000000000000']
     },
     badwords: {
-        wordlist: ["blowjob",
-            "asshole",
-            "dick",
-            "damn",
-            "pussy",
-            "fuck",
-            "cunt",
-            "faggot",
-            "crap",
-            "crap",
-            "bitch",
-            "nigger",
-            "cock"
-        ],
+        wordlist: ["sample", "word", "list"],
         punish: {
             deleteMessage: false,
             warn: false,
