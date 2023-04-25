@@ -1,0 +1,6 @@
+{
+	"compilerOptions": {
+		"lib": ["esnext"],
+		"typeRoots": ["global.d.ts"]
+	}
+}
