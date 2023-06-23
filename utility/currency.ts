@@ -30,7 +30,7 @@ config.commands.on(
         var embed = new discord.Embed()
             .setTitle(`Currency Conversion: **${fromCap}** to **${toCap}**`)
             .setColor(0x9cff1d)
-            .setDescription(`The conversion rate between \`${fromCap}\` and \`${toCap}\` is \`${rate}\`.\n\n\`${symbFrom}${amtFrom} ${fromCap}\` is equal to \`${symbTo}${amtTo} ${toCap}\`.`);
+            .setDescription(`The conversion rate between \`${fromCap}\` and \`${toCap}\` is \`${rate}\`.\n\n\`${symbFrom}${amtFrom.toFixed(symbData[fromCap].decimal_digits)} ${fromCap}\` is equal to \`${symbTo}${amtTo.toFixed(symbData[toCap].decimal_digits)} ${toCap}\`.`);
         // send embed
         await message.reply({ content: '', embed: embed });
     }
