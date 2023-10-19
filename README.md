@@ -34,4 +34,4 @@ For all files except config and function files:
 (do NOT include the file extension here)
 
 **Be sure to watch this repo or check back occasionally for updates and additions**
-#### Huge thanks to Asty`#8926, asportnoy#6969 and Juno#6096 for their help
+#### Huge thanks to Asty8926, asportnoy and gemiddeldeappelmoesgenieter for their help
