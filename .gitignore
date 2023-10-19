@@ -1,3 +1,6 @@
 #files for WIP projects
 #ignore this file
 LICENSE
+
+global.d.ts
+tsconfig.json
