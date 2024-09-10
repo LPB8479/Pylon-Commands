@@ -5,6 +5,10 @@ export const config = {
     additionalPrefixes: ['!'],
     mentionPrefix: true
   }),
+  legoSlash: discord.interactions.commands.registerGroup({
+    name: 'lego',
+    description: 'LEGO-related commands'
+  }),
   channel: {
     modpg: '000000000000000000',
     welcome: '000000000000000000',
