@@ -271,7 +271,7 @@ discord.on(discord.Event.MESSAGE_DELETE, async (event, message) => {
 discord.on(discord.Event.MESSAGE_UPDATE, async (newMessage, oldMessage) => {
   let channel = (await discord.getGuildTextChannel(logConfig.logChannels.messageLogChannelID))!;
   let delChannel = (await discord.getGuild().then((g) => g.getChannel(oldMessage?.channelId!))) as MessageChannel;
-    if (logConfig.messageLogToggle.messageDelete == true && ((logConfig.messageLogIgnore.includes(oldMessage?.author.id!) || logConfig.messageLogIgnore.includes(oldMessage?.channelId!)) == false) && oldMessage?.author.bot == false) {
+    if (logConfig.messageLogToggle.messageEdit == true && ((logConfig.messageLogIgnore.includes(oldMessage?.author.id!) || logConfig.messageLogIgnore.includes(oldMessage?.channelId!)) == false) && oldMessage?.author.bot == false) {
     await channel?.sendMessage(
       new discord.Embed({
         title: `Message edited in #${delChannel?.name}`,
