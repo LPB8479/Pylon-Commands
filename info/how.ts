@@ -13,25 +13,28 @@ config.commands.on(
     async (message, { keyword }) => {
         if (keyword) {
             const largs = keyword.toLowerCase();
-            if ('idusage'.includes(largs)) {
-                var pastebin = 'JhzhQChy';
-            } else {
-                if ('report'.includes(largs)) {
-                    var pastebin = '3nPKuE30';
-                } else {
-                    if ('markdown_mkdn_formatting_fmt'.includes(largs)) {
-                        var pastebin = '6rCiB6zK';
-                    } else {
-                        var pastebin = 'Rwz180j2';
-                    }
-                }
+            let pastebin;
+            switch (largs) {
+                case 'idusage':
+                    pastebin = 'JhzhQChy';
+                    break;
+                case 'report':
+                    pastebin = '3nPKuE30';
+                    break;
+                case 'markdown':
+                case 'mkdn':
+                case 'formatting':
+                case 'format':
+                case 'fmt':
+                    pastebin = '6rCiB6zK';
+                    break;
+                default:
+                    pastebin = 'Rwz180j2'
             }
-        } else {
-            var pastebin = 'Rwz180j2';
+            const req = await fetch('https://pastebin.com/raw/' + pastebin);
+            const data = await req.json();
+            await message.reply(new discord.Embed(data));
         }
-        const req = await fetch('https://pastebin.com/raw/' + pastebin);
-        const data = await req.json();
-        await message.reply(new discord.Embed(data));
     }
 );
 
@@ -46,18 +49,23 @@ config.slashCommands.register(
     },
     async (interaction, { keyword }) => {
         const largs = keyword.toLowerCase();
-        if ('idusage'.includes(largs)) {
-            var pastebin = 'JhzhQChy';
-        } else {
-            if ('report'.includes(largs)) {
-                var pastebin = '3nPKuE30';
-            } else {
-                if ('markdown_mkdn_formatting_fmt'.includes(largs)) {
-                    var pastebin = '6rCiB6zK';
-                } else {
-                    var pastebin = 'Rwz180j2';
-                }
-            }
+        let pastebin;
+        switch (largs) {
+            case 'idusage':
+                pastebin = 'JhzhQChy';
+                break;
+            case 'report':
+                pastebin = '3nPKuE30';
+                break;
+            case 'markdown':
+            case 'mkdn':
+            case 'formatting':
+            case 'format':
+            case 'fmt':
+                pastebin = '6rCiB6zK';
+                break;
+            default:
+                pastebin = 'Rwz180j2'
         }
         const req = await fetch('https://pastebin.com/raw/' + pastebin);
         const data = await req.json();
