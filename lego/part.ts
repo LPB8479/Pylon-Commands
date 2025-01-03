@@ -1,10 +1,9 @@
 import { config } from '../config/config';
-function makeEmbed(blid: string, data2: JSON, data3?: JSON, tlgid?: number) {
+
+function makeEmbed(data2: JSON, data3?: JSON, tlgid?: number) {
   // make embed
   const embed = new discord.Embed();
-  embed.setTitle(`Part ${blid}: ${data2.name}`);
   embed.setColor(0x4f545c);
-  embed.setUrl(`https://www.bricklink.com/v2/catalog/catalogitem.page?P=${blid}#T=P`);
   embed.setThumbnail({ url: data2.part_img_url });
   if (tlgid != undefined) {
     embed.setDescription(
@@ -13,14 +12,39 @@ function makeEmbed(blid: string, data2: JSON, data3?: JSON, tlgid?: number) {
         : `${data2.year_from}-${data2.year_to}`
       }\nAppears in ${data3.count} ${data3.count == 1 ? 'color' : 'colors'}`
     );
+  }
+
+  if (data2.external_ids.BrickLink != undefined) {
+    const blid = data2.external_ids.BrickLink[0];
+    embed.setTitle(`Part ${blid}: ${data2.name}`);
+    embed.setUrl(`https://www.bricklink.com/v2/catalog/catalogitem.page?P=${blid}#T=P`);
+  } else {
+    embed.setTitle(`Part ${data2.part_num}: ${data2.name}`);
+    embed.setUrl(data2.part_url);
+  }
+
+  if (tlgid != undefined) {
+    let ids = "";
+    let links = "";
+    if (data2.external_ids.BrickLink != undefined) {
+      ids += `Bricklink ID: ${data2.external_ids.BrickLink[0]}\n`;
+      links += `[Bricklink](https://www.bricklink.com/v2/catalog/catalogitem.page?P=${data2.external_ids.BrickLink[0]}#T=P)\n`;
+    }
+    ids += `Lego ID: ${tlgid}`;
+    links += `[Rebrickable](${data2.part_url})`;
+    if (data2.external_ids.BrickOwl != undefined) {
+      ids += `\nBrickOwl ID: ${data2.external_ids.BrickOwl[0]}`;
+      links += `\n[BrickOwl](https://www.brickowl.com/catalog/${data2.external_ids.BrickOwl[0]})`
+    }
+    
     embed.addField({
       name: '​',
-      value: `Bricklink ID: ${blid}\nLego ID: ${tlgid}\nBrickOwl ID: ${data2.external_ids.BrickOwl[0]}`,
+      value: ids,
       inline: true,
     });
     embed.addField({
       name: '​',
-      value: `[Bricklink](https://www.bricklink.com/v2/catalog/catalogitem.page?P=${blid}#T=P)\n[Rebrickable](${data2.part_url})\n[BrickOwl](https://www.brickowl.com/catalog/${data2.external_ids.BrickOwl[0]})`,
+      value: links,
       inline: true,
     });
   }
@@ -33,12 +57,12 @@ config.commands.on(
     aliases: ['partinfo'],
     description: 'Gives information about any given part',
   },
-  (args) => ({ bricklink_part_id: args.text(), }),
-  async (message, { bricklink_part_id }) => {
-    const blid = bricklink_part_id.split(' ')[0];
+  (args) => ({ query_id: args.text(), }),
+  async (message, { query_id }) => {
+    const qid = query_id.split(' ')[0];
     // Get data from rebrickable's api
     const parts1 = await fetch(
-      'https://rebrickable.com/api/v3/lego/parts/?bricklink_id=' + blid,
+      'https://rebrickable.com/api/v3/lego/parts/?bricklink_id=' + qid,
       {
         headers: {
           Accept: 'application/json',
@@ -58,7 +82,7 @@ config.commands.on(
       );
       const data3 = await parts3.json();
       // send embed
-      await message.reply(makeEmbed(blid, data2, data3, tlgid));
+      await message.reply(makeEmbed(data2, data3, tlgid));
     } catch (e) {
       await message.reply('Invalid Input');
     }
@@ -75,10 +99,10 @@ discord.on('MESSAGE_CREATE', async (message) => {
       const wholeMessage = message.content.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '').replace(/\s{2,}/g, ' ').toLowerCase().split(' ');
       const keywordIndex = wholeMessage.indexOf(keyword);
       const partNumIndex = keywordIndex + 1;
-      const blid = wholeMessage[partNumIndex];
+      const qid = wholeMessage[partNumIndex];
       // Get data from rebrickable's api
       const parts = await fetch(
-        `https://rebrickable.com/api/v3/lego/parts/?bricklink_id=${blid}`,
+        `https://rebrickable.com/api/v3/lego/parts/?bricklink_id=${qid}`,
         {
           headers: {
             Accept: 'application/json',
@@ -87,8 +111,8 @@ discord.on('MESSAGE_CREATE', async (message) => {
         }
       );
       const data = await parts.json();
-      if (data.count != 0 && (parseInt(blid) > 10 || isNaN(blid) == true)) {
-        await message.reply(makeEmbed(blid, data.results[0]));
+      if (data.count != 0 && (parseInt(qid) > 10 || isNaN(parseInt(qid)) == true)) {
+        await message.reply(makeEmbed(data.results[0]));
       }
     }
   }
@@ -125,7 +149,7 @@ config.legoSlash.register(
       `https://rebrickable.com/api/v3/lego/parts/${tlgid}/colors/?key=${config.api.rebrickableAPI}`
     );
     const data3 = await parts3.json();
-    const embed = makeEmbed(blid, data2, data3, tlgid);
+    const embed = makeEmbed(data2, data3, tlgid);
     // send embed
     await interaction.respond({
       embeds: [embed],
