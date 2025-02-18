@@ -36,7 +36,7 @@ function makeEmbed(data2: JSON, data3?: JSON, tlgid?: number) {
       ids += `\nBrickOwl ID: ${data2.external_ids.BrickOwl[0]}`;
       links += `\n[BrickOwl](https://www.brickowl.com/catalog/${data2.external_ids.BrickOwl[0]})`
     }
-    
+
     embed.addField({
       name: '​',
       value: ids,
@@ -51,14 +51,41 @@ function makeEmbed(data2: JSON, data3?: JSON, tlgid?: number) {
   return embed;
 }
 
+function colorEmbed(data2: JSON, tlgid?: JSON, blColorName?: number, partColorData?: JSON) {
+  const embed = new discord.Embed();
+  embed.setColor(0x4f545c);
+  embed.setThumbnail({ url: partColorData.part_img_url });
+  if (tlgid != undefined) {
+    embed.setDescription(
+      `${partColorData.year_from == partColorData.year_to
+        ? partColorData.year_from
+        : `${partColorData.year_from}-${partColorData.year_to}`
+      }\nAppears in ${partColorData.num_sets} ${partColorData.num_sets == 1 ? 'set' : 'sets'}`
+    );
+  }
+
+  if (data2.external_ids.BrickLink != undefined) {
+    const blid = data2.external_ids.BrickLink[0];
+    embed.setTitle(`Part ${blid}: ${data2.name} - ${blColorName}`);
+    embed.setUrl(`https://www.bricklink.com/v2/catalog/catalogitem.page?P=${blid}#T=P`);
+  } else {
+    embed.setTitle(`Part ${data2.part_num}: ${data2.name}`);
+    embed.setUrl(data2.part_url);
+  }
+  return embed;
+}
+
 config.commands.on(
   {
     name: 'part',
     aliases: ['partinfo'],
     description: 'Gives information about any given part',
   },
-  (args) => ({ query_id: args.text(), }),
-  async (message, { query_id }) => {
+  (args) => ({
+    query_id: args.string(),
+    colorInput: args.textOptional()
+  }),
+  async (message, { query_id, colorInput }) => {
     const qid = query_id.split(' ')[0];
     // Get data from rebrickable's api
     const parts1 = await fetch(
@@ -81,8 +108,41 @@ config.commands.on(
         `https://rebrickable.com/api/v3/lego/parts/${tlgid}/colors/?key=${config.api.rebrickableAPI}`
       );
       const data3 = await parts3.json();
-      // send embed
-      await message.reply(makeEmbed(data2, data3, tlgid));
+      if (colorInput == null) {
+        // send embed
+        await message.reply(makeEmbed(data2, data3, tlgid));
+      } else {
+        const colorName = colorInput.toLowerCase().replace("grey", "gray");
+        //get color id
+        const hasAliasList = ["lbg", "dbg"]
+        let colorID;
+        let blColorName;
+        if (hasAliasList.includes(colorName)) {
+          switch (colorName) {
+            case "lbg": {
+              colorID = 71;
+              blColorName = "Light Bluish Gray";
+              break
+            }
+            case "dbg": {
+              colorID = 72;
+              blColorName = "Dark Bluish Gray";
+              break
+            }
+          }
+        } else {
+          const color1 = await fetch(`https://rebrickable.com/api/v3/lego/colors/?key=${config.api.rebrickableAPI}&page_size=267`)
+          const colorData = await color1.json();
+          const matchingColor = colorData.results.find(color => color.name.toLowerCase() === colorName);
+          colorID = matchingColor.id;
+          blColorName = matchingColor.external_ids.BrickLink.ext_descrs[0][0];
+        }
+        //get color/part combo
+        const color2 = await fetch(`https://rebrickable.com/api/v3/lego/parts/${tlgid}/colors/${colorID}/?key=${config.api.rebrickableAPI}`)
+        const partColorData = await color2.json();
+        //send embed
+        await message.reply(colorEmbed(data2, tlgid, blColorName, partColorData));
+      }
     } catch (e) {
       await message.reply('Invalid Input');
     }
@@ -123,11 +183,11 @@ config.legoSlash.register(
     name: 'part',
     description: 'Gives information about any given part',
     options: (opt) => ({
-      bricklink_part_id: opt.string('Bricklink Part ID'),
+      part_id: opt.string('Bricklink Part ID'),
     }),
   },
-  async (interaction, { bricklink_part_id }) => {
-    const input = bricklink_part_id;
+  async (interaction, { part_id }) => {
+    const input = part_id;
     const blid = input;
     // Get data from rebrickable's api
     const parts1 = await fetch(
