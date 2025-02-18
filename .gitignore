@@ -1,5 +1,6 @@
 #files for WIP projects
 #ignore this file
+metro.ts
 mute.ts
 verify.ts
 vote.ts
